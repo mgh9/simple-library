@@ -1,0 +1,212 @@
+﻿<div id="page_content">
+
+    <div id="page_heading">
+        <div class="heading_actions">
+            <a href="javascript: void(0)" data-uk-tooltip="{pos:'bottom'}"
+               ng-click="self.toggleFilter()"
+               title="Search"><i ng-class="{ 'md-color-blue-500': isFilterActive }" class="md-icon material-icons">&#xE8B6;</i></a>
+        </div>
+        <h1>{{state_title}}</h1>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-3-10">
+                    <label>Title</label>
+                    <input type="text" class="md-input"
+                           ng-model="request.searchFilterModel.title.value"
+                           maxlength="30"
+                           md-input />
+                </div>
+
+                <div class="uk-width-small-3-10">
+                    <label>Main menu</label>
+                    <input type="text" class="md-input"
+                           ng-model="request.searchFilterModel.parentMenuLinkTitle.value"
+                           maxlength="30"
+                           md-input />
+                </div>
+
+                <div class="uk-width-small-3-10">
+                    <div>
+                        <label>Status</label>
+                        <div class="uk-margin-small-top">
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_undefined" icheck ng-value="undefined"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_undefined" class="inline-label">All</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_true" icheck ng-value="true"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_true" class="inline-label">Active</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_false" icheck ng-value="false"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_false" class="inline-label">Inactive</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <button type="button" class="md-btn md-btn-primary uk-margin-top"
+                            ng-click="self.filterTable($event)">
+                        Search
+                    </button>
+                    <button type="button" class="md-btn md-btn-danger uk-margin-top"
+                            ng-click="self.clearSearchFilters()">
+                        Clear filters
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="page_content_inner">
+        <div class="md-card">
+            <div class="md-card-content">
+                <grid-view></grid-view>
+            </div>
+        </div>
+
+        <div id="edit-dialog" class="uk-modal">
+            <div class="uk-modal-dialog">
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Edit menu</h3>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <ul class="uk-tab" data-uk-tab="{connect:'#tabs'}">
+                        <li class="uk-active"><a href="#">Menu</a></li>
+                        <li><a href="#">Roles</a></li>
+                    </ul>
+                    <ul id="tabs" class="uk-switcher uk-margin">
+                        <li>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-1-1">
+                                        <label>Main menu</label>
+                                        <input type="text"
+                                               config="selectizeConfig"
+                                               options="menuLinks"
+                                               ng-model="entity.parentId"
+                                               selectize />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-2-4">
+                                        <label>Title</label>
+                                        <input type="text" class="md-input"
+                                               ng-model="entity.title"
+                                               maxlength="30"
+                                               md-input />
+                                    </div>
+                                    <div class="uk-width-small-1-4">
+                                        <label>Order</label>
+                                        <input type="number" class="md-input"
+                                               ng-model="entity.orderNumber"
+                                               md-input />
+                                    </div>
+                                    <div class="uk-width-small-1-4">
+                                        <label>Status</label>
+                                        <div class="uk-margin-small-top">
+                                            <p>
+                                                <input type="checkbox" name="isActive" id="isActive" icheck ng-model="entity.isActive" />
+                                                <label for="isActive" class="inline-label">Active</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-1-1">
+                                        <label>Description</label>
+                                        <textarea class="md-input"
+                                                  ng-model="entity.description"
+                                                  maxlength="100"
+                                                  md-input></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-1-1">
+                                        <label>Route</label>
+                                        <input class="md-input ltr"
+                                               ng-model="entity.route"
+                                               maxlength="200"
+                                               md-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-1-1">
+                                        <label>Icon</label>
+                                        <input class="md-input ltr"
+                                               ng-model="entity.icon"
+                                               maxlength="50"
+                                               md-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-form-row">
+                                <div class="uk-grid">
+                                    <div class="uk-width-small-1-1">
+                                        <div class="uk-input-group">
+                                            <input type="text"
+                                                   config="selectizeConfig"
+                                                   options="roles"
+                                                   ng-model="roleId"
+                                                   selectize />
+                                            <span class="uk-input-group-addon"><a class="md-btn" href="#" ng-click="self.addRole($event)">Add</a></span>
+                                        </div>
+
+                                        <ul class="md-list uk-margin-top">
+                                            <li ng-repeat="item in entity.owners">
+                                                <div class="md-list-content">
+                                                    <a class="md-btn md-btn-flat md-btn-flat-danger md-btn-wave uk-float-right"
+                                                       ng-click="self.removeRole($event, item)">Remove</a>
+                                                    <span class="md-list-heading">{{item.roleTitle}}</span>
+                                                    <span class="uk-text-small uk-text-muted">{{item.roleTitle}}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-success"
+                            ng-click="self.save($event)">
+                        Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-warning"
+                            ng-click="self.cancel($event)">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md-fab-wrapper">
+            <a class="md-fab md-fab-success btn-add" href="#" ng-click="self.add($event)">
+                <i class="material-icons">&#xE145;</i>
+            </a>
+        </div>
+
+    </div>
+
+</div>

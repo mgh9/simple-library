@@ -1,0 +1,103 @@
+﻿<div id="page_content">
+    <div id="page_content_inner">
+        
+        <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-1 uk-grid-width-large-3-3" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+
+            <div>
+                <div class="md-card">
+                    <div class="md-card-head md-bg-light-blue-600">
+                        <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
+                            <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav">
+                                    <li><a href="#/management/user-profile">my profile</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="uk-text-center">
+                            <img class="md-card-head-avatar" ng-src="{{userInfo.imageAbsoluteUrl}}" alt="user avatar" />
+                        </div>
+                        <h3 class="md-card-head-text uk-text-center md-color-white">
+                            {{userInfo.fullName}}
+                        </h3>
+                    </div>
+                    <div class="md-card-content">
+                        <ul class="md-list md-list-addon">
+                            
+                            <li>
+                                <div class="md-list-addon-element">
+                                    <i class="md-list-addon-icon material-icons">smartphone</i>
+                                </div>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">{{userInfo.mobile}}</span>
+                                    <span class="uk-text-small uk-text-muted">mobile</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-addon-element">
+                                    <i class="md-list-addon-icon material-icons">email</i>
+                                </div>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">{{userInfo.email}}</span>
+                                    <span class="uk-text-small uk-text-muted">email</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-addon-element">
+                                    <i class="md-list-addon-icon material-icons">person</i>
+                                </div>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">{{userInfo.userName}}</span>
+                                    <span class="uk-text-small uk-text-muted">userName</span>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<div class="uk-width-medium-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <h3 class="heading_a uk-margin-bottom">Last logins</h3>
+
+                        <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
+                            <i class="md-icon material-icons md-icon-dark">&#xE5D4;</i>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav">
+                                    <li><a href="#/auditing/basic-user-audits">more...</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="uk-overflow-container">
+                            <table class="uk-table">
+                                <thead>
+                                    <tr>
+                                        <th class="uk-text-nowrap uk-text-center">Action</th>
+                                        <th class="uk-text-nowrap uk-text-center">Time</th>
+                                        <th class="uk-text-nowrap uk-text-center">Ip address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="auditItem in audits" class="uk-table-middle">
+                                        <td class="uk-width-3-10 uk-text-nowrap uk-text-center">{{auditItem.eventId | toEventIdString }}</td>
+                                        <td class="uk-width-3-10 uk-text-center uk-text-muted uk-text-small ltr">{{auditItem.createDate}}</td>
+                                        <td class="uk-width-4-10 uk-text-nowrap uk-text-center uk-text-muted uk-text-small">{{auditItem.remoteIpAddress}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+
+
+
+    </div>
+</div>

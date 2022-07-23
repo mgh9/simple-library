@@ -1,0 +1,59 @@
+﻿
+@import "base.scss";
+
+html,
+body {
+    background-image: url("/images/bg-01.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg {
+    height: 100%;
+}
+
+.login-form {
+    background-color: rgba(255,255,255,0.8) !important;
+    border-width: 0;
+    width: 600px;
+    /*height: 400px;*/
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+.login-form__header {
+    background-color: #2b1d3e;
+}
+
+.login-form__client-icon-box {
+    $size: 150px;
+
+    width: $size;
+    height: $size;
+    margin: 0 auto;
+    margin-top: calc( -#{$size / 2 + 20px} );
+    text-align: center;
+    border: 1px solid #ff0000;
+    background-color: rgba(255,255,255,1);
+    /*display:block;*/
+    border-width: 0;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    display: flex;
+    position: absolute;
+    top: 10px;
+    left: calc(50% - #{$size / 2});
+}
+
+.login-form__client-icon {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+}
+
+.logged-out {
+    color: white;
+}

@@ -1,0 +1,28 @@
+/* base : tsconfig.json
+          tsconfig.development.json
+          tsconfig.production.json
+
+ // TODO: hanuz revale automate e build kardan bar asaye tsconfig.*.json baste b Environment e Current ok nashode..
+  ers-bari ham hanuz ok nashode!!!
+
+  dasti age niaz bashe, development ro build kon ta comment o SourceMap ro besaze: 
+  tsc.exe --build tsconfig.development.json
+  tsc.exe --build tsconfig.production.json
+  */
+
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": true, // 
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "obj",
+    "bin"
+  ]
+}

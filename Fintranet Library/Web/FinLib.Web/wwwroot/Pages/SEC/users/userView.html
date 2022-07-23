@@ -1,0 +1,535 @@
+﻿<div id="page_content">
+
+    <div id="page_heading">
+        <div class="heading_actions">
+            <a href="javascript: void(0)" data-uk-tooltip="{pos:'bottom'}"
+               ng-click="self.toggleFilter()"
+               title="جستجو"><i ng-class="{ 'md-color-blue-500': isFilterActive }" class="md-icon material-icons">&#xE8B6;</i></a>
+        </div>
+        <h1>{{state_title}}</h1>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-2-10">
+                    <label>Firstname</label>
+                    <input type="text" class="md-input"
+                           ng-enter="self.filterTable($event)"
+                           maxlength="30"
+                           ng-model="request.searchFilterModel.firstName.value"
+                           md-input />
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <label>Lastname</label>
+                    <input type="text" class="md-input"
+                           ng-enter="self.filterTable($event)"
+                           maxlength="30"
+                           ng-model="request.searchFilterModel.lastName.value"
+                           md-input />
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <label>Username</label>
+                    <input type="text" class="md-input"
+                           ng-enter="self.filterTable($event)"
+                           maxlength="30"
+                           ng-model="request.searchFilterModel.userName.value"
+                           md-input />
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-3-10">
+                    <div>
+                        <label>Status</label>
+                        <div class="uk-margin-small-top">
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_undefined" icheck ng-value="undefined"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_undefined" class="inline-label">All</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_true" icheck ng-value="true"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_true" class="inline-label">Active</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_false" icheck ng-value="false"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_false" class="inline-label">Inactive</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <button type="button" class="md-btn md-btn-primary uk-margin-top uk-float-right"
+                            ng-click="self.filterTable($event)">
+                        Search
+                    </button>
+                    <button type="button" class="md-btn md-btn-danger uk-margin-top"
+                            ng-click="self.clearSearchFilters()">
+                        Clear filters
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="page_content_inner">
+        <div class="md-card">
+            <div class="md-card-content">
+                <grid-view></grid-view>
+            </div>
+        </div>
+
+        <div id="edit-dialog" class="uk-modal">
+            <div class="uk-modal-dialog">
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Edit</h3>
+                </div>
+
+                <ul class="uk-tab" data-uk-tab="{connect: '#tabs'}">
+                    <li class="uk-active">
+                        <a href="#">Personal info</a>
+                    </li>
+
+                    <li class="contact-info-tab">
+                        <a href="#">Contact</a>
+                    </li>
+
+                    <li class="user-info-tab">
+                        <a href="#">User</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Roles</a>
+                    </li>
+                </ul>
+
+                <ul id="tabs" class="uk-switcher uk-margin">
+                    <!-- personal -->
+                    <li>
+                        <div class="uk-form-row uk-margin-medium-top">
+                            <div class="uk-grid">
+                                <div class="uk-width-small-3-6">
+                                    <label>Firstname</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.firstName"
+                                           maxlength="20"
+                                           md-input />
+                                </div>
+                                <div class="uk-width-small-3-6">
+                                    <label>Lastname</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.lastName"
+                                           maxlength="50"
+                                           md-input />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="uk-form-row">
+                            <div class="uk-grid">
+                                <div class="uk-width-small-3-6 uk-margin-medium-top">
+                                    <input type="text"
+                                           config="gendersConfig"
+                                           options="genders"
+                                           ng-model="entity.gender"
+                                           selectize />
+                                </div>
+
+                                <div class="uk-width-small-3-6">
+                                    <label>Birthdate</label>
+                                    <adm-dtp ng-model='entity.birthDate' options="admOptions">
+                                        <input type="text" class="md-input"
+                                               ng-model='entity.birthDate'
+                                               dtp-input
+                                               md-input />
+                                    </adm-dtp>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <!-- Contact -->
+                    <li>
+                        <div class="uk-form-row uk-margin-medium-top">
+                            <div class="uk-grid">
+                                <div class="uk-width-small-2-6">
+                                    <label>Phone number</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.phoneNumber"
+                                           md-input
+                                           maxlength="11"
+                                           numbers-only />
+                                </div>
+                                <div class="uk-width-small-2-6">
+                                    <label>Mobile</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.mobile"
+                                           md-input
+                                           maxlength="11"
+                                           numbers-only />
+                                </div>
+                                <div class="uk-width-small-2-6">
+                                    <label>Email</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.email"
+                                           md-input
+                                           maxlength="30" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <!-- user info -->
+                    <li>
+                        <div class="uk-alert uk-alert-info" data-uk-alert ng-show="entity.id<=0">
+                            <a href="" class="uk-alert-close uk-close"></a>
+                            <ul>
+                                <li ng-show="passwordLengthPolicyText">
+                                    {{passwordLengthPolicyText}}
+                                </li>
+                                <li ng-show="passwordDigitRequirePolicyText">
+                                    {{passwordDigitRequirePolicyText}}
+                                </li>
+                                <li ng-show="passwordNonAlphabetRequirePolicyText">
+                                    {{passwordNonAlphabetRequirePolicyText}}
+                                </li>
+                                <li ng-show="passwordUppercaseRequirePolicyText">
+                                    {{passwordUppercaseRequirePolicyText}}
+                                </li>
+                                <li ng-show="passwordLowercaseRequirePolicyText">
+                                    {{passwordLowercaseRequirePolicyText}}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="uk-form-row uk-margin-medium-top">
+                            <div class="uk-grid">
+                                <div class="uk-width-small-3-6">
+                                    <label>Username</label>
+                                    <input type="text" class="md-input"
+                                           ng-model="entity.userName"
+                                           ng-disabled="entity.id > 0"
+                                           maxlength="30"
+                                           md-input />
+                                </div>
+
+                                <div class="uk-width-small-3-6 uk-form-password" ng-show="entity.id<=0">
+                                    <label>Password</label>
+                                    <input type="password" class="md-input"
+                                           ng-model="entity.password"
+                                           maxlength="{{passwordPolicy.maxLength}}"
+                                           md-input />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="uk-form-row">
+                            <div class="uk-grid">
+
+                                <div class="uk-width-small-3-6">
+                                    <label>Status</label>
+                                    <div class="uk-margin-small-top">
+                                        <p>
+                                            <input type="checkbox" name="isActive" id="isActive" icheck ng-model="entity.isActive" />
+                                            <label for="isActive" class="inline-label">Active</label>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User roles -->
+                    <li>
+                        <div class="uk-input-group">
+                            <input type="text"
+                                   config="selectizeConfig"
+                                   options="roles"
+                                   ng-model="roleId"
+                                   selectize />
+                            <span class="uk-input-group-addon"><a class="md-btn" href="#" ng-click="self.addRole($event)">Add</a></span>
+                        </div>
+
+                        <ul class="md-list uk-margin-top">
+                            <li ng-repeat="item in entity.userRoles">
+                                <div class="md-list-content">
+
+                                    <span class="md-list-heading uk-margin-small-top uk-float-right"
+                                          ng-class="{ 'uk-text-muted': !item.isActive}">
+                                        {{item.roleTitle}}
+                                    </span>
+
+                                    <a class="md-btn md-btn-flat md-btn-flat-danger md-btn-wave uk-float-left"
+                                       ng-click="self.removeRole($event, item)">Remove</a>
+
+                                    <a class="md-btn md-btn-flat md-btn-flat-warning md-btn-wave uk-float-left"
+                                       ng-show="item.isActive"
+                                       ng-click="self.toggleRoleDisableOrEnable($event, item, false)">Deactivate</a>
+
+                                    <a class="md-btn md-btn-flat md-btn-flat-success md-btn-wave uk-float-left"
+                                       ng-show="!item.isActive"
+                                       ng-click="self.toggleRoleDisableOrEnable($event, item, true)">Activate</a>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-success"
+                            ng-click="self.save($event)">
+                        Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-warning"
+                            ng-click="self.cancel($event)">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="md-fab-wrapper">
+            <a class="md-fab md-fab-success btn-add" href="#" ng-click="self.add($event)">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- user info -->
+<div id="single-view-dialog" class="uk-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-large">
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">User info of {{singleViewModel.fullName}}</h3>
+        </div>
+
+        <ul class="uk-tab" data-uk-tab="{connect: '#tabs_user_details'}">
+            <li class="user-info-tab uk-active">
+                <a href="#">Account info</a>
+            </li>
+
+            <li>
+                <a href="#">Personal</a>
+            </li>
+
+            <li class="contact-info-tab">
+                <a href="#">Contact</a>
+            </li>
+
+        </ul>
+
+        <ul id="tabs_user_details" class="uk-switcher uk-margin">
+            <!-- Account -->
+            <li>
+                <div class="uk-form-row uk-margin-medium-top">
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-3-10">
+                            <span>
+                                Username:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.userName}}
+                            </strong>
+                        </div>
+                        <div class="uk-width-medium-7-10 uk-text-center">
+                            <span>
+                                Last login date:
+                            </span>
+                            <strong class="md-color-blue-500" ng-show="!singleViewModel.lastLoggedInTime">
+                                Not yet
+                            </strong>
+                            <strong class="md-color-blue-500" ng-show="singleViewModel.lastLoggedInTime">
+                                {{singleViewModel.lastLoggedInTime | date:'MM/dd/yyyy HH:mm:ss'}}
+                            </strong>
+                            <strong class="md-color-blue-100" ng-show="singleViewModel.lastLoggedInTime">
+                                about
+                            </strong>
+                            <strong class="md-color-blue-100" ng-show="singleViewModel.lastLoggedInTime" am-time-ago="singleViewModel.lastLoggedInTime">
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+
+            <!-- Personal info -->
+            <li>
+                <div class="uk-form-row uk-margin-medium-top">
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-3-6">
+                            <span>
+                                Firstname:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.firstName}}
+                            </strong>
+                        </div>
+                        <div class="uk-width-medium-3-6">
+                            <span>
+                                Lastname:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.lastName}}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-form-row">
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-3-6">
+                            <span>
+                                Gender:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.gender | toGenderString}}
+                            </strong>
+                        </div>
+
+                        <div class="uk-width-medium-3-6">
+                            <span>
+                                Birthdate:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.birthDate | date}}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+
+            <!-- Contact -->
+            <li>
+                <div class="uk-form-row uk-margin-medium-top">
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-2-6">
+                            <span>
+                                Phone number:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.phoneNumber}}
+                            </strong>
+                        </div>
+                        <div class="uk-width-medium-2-6">
+                            <span>
+                                Mobile:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.mobile}}
+                            </strong>
+                        </div>
+                        <div class="uk-width-medium-2-6">
+                            <span>
+                                Email:
+                            </span>
+                            <strong class="md-color-blue-500">
+                                {{singleViewModel.email}}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <hr class="uk-divider-icon">
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="md-btn md-btn-warning"
+                    ng-click="self.closeSingleViewDialog($event)">
+                Back
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Password reset -->
+<div id="reset-password-dialog" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Password reset for '{{resetPasswordDialogData.user.fullName}} ({{resetPasswordDialogData.user.userName}})'</h3>
+        </div>
+
+        <div class="uk-form-row uk-margin-medium-top">
+            <div class="uk-grid">
+                <div class="uk-width-medium-5-10">
+                    <span>
+                        Username:
+                    </span>
+                    <strong class="md-color-blue-500">
+                        {{resetPasswordDialogData.user.userName}}
+                    </strong>
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="uk-divider-icon" accesskey="" />
+
+        <div class="uk-alert uk-alert-info" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+            <ul>
+                <li ng-show="passwordLengthPolicyText">
+                    {{passwordLengthPolicyText}}
+                </li>
+                <li ng-show="passwordDigitRequirePolicyText">
+                    {{passwordDigitRequirePolicyText}}
+                </li>
+                <li ng-show="passwordNonAlphabetRequirePolicyText">
+                    {{passwordNonAlphabetRequirePolicyText}}
+                </li>
+                <li ng-show="passwordUppercaseRequirePolicyText">
+                    {{passwordUppercaseRequirePolicyText}}
+                </li>
+                <li ng-show="passwordLowercaseRequirePolicyText">
+                    {{passwordLowercaseRequirePolicyText}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="uk-form-row">
+            <div class="uk-grid">
+
+                <div class="uk-width-small-1-1 uk-form-password">
+                    <label>Password</label>
+                    <input type="password" class="md-input"
+                           ng-model="resetPasswordModel.newPassword"
+                           maxlength="{{passwordPolicy.maxLength}}"
+                           md-input />
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="md-btn md-btn-success"
+                    ng-click="self.resetPassword($event, resetPasswordDialogData)">
+                Reset
+            </button>
+            <button type="button" class="md-btn md-btn-warning"
+                    ng-click="self.closeResetPasswordDialog($event)">
+                Cancel
+            </button>
+        </div>
+
+    </div>
+</div>

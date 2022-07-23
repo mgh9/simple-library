@@ -1,0 +1,141 @@
+﻿@{
+    string ver = System.Reflection.Assembly.GetAssembly(typeof(global::FinLib.Web.Controllers.HomeController)).GetName().Version.ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en"
+      dir="ltr"
+      class="{{main_theme}}"
+      ng-app="altairApp"
+      ng-init="$root.checkAuthentication(@(User.Identity.IsAuthenticated ? "true" : "false"))"
+      document-events
+      ng-click="onClick($event)"
+      ng-keyup="onKeyUp($event)"
+      ng-class="{
+		'page_loading': pageLoading,
+		'page_loaded': pageLoaded,
+		'app_initialized': appInitialized && (!$state.is('login') && !$state.includes('error'))
+}">
+<head>
+    <meta charset="UTF-8">
+    <title page-title ng-bind="page_title"></title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <script>var ver = '@ver';</script>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="/assets/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/img/favicon-32x32.png" sizes="32x32">
+
+    <!-- flag icons -->
+    @*<link rel="stylesheet" href="/assets/icons/flags/flags.min.css" media="all">*@
+
+    <!-- main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.min.css" media="all" id="main_stylesheet">
+
+    <!-- custom stylesheet -->
+    <link href="/css/angularjs/styles.min.css?ver=@ver" rel="stylesheet" />
+
+    <link href="/fonts/font-awesome/css/all.min.css" rel="stylesheet" />
+
+    <link href="/css/util.min.css" rel="stylesheet" media="all">
+    
+    @*<link href="/lib/parsleyjs/src/parsley.css" rel="stylesheet" media="all">*@
+
+    <!-- matchMedia polyfill for testing media queries in JS -->
+    <!--[if lte IE 9]>
+        <script type="text/javascript" src="/lib/matchMedia/matchMedia.js"></script>
+        <script type="text/javascript" src="/lib/matchMedia/matchMedia.addListener.js"></script>
+        <link rel="stylesheet" href="/assets/css/ie.css" media="all">
+    <![endif]-->
+</head>
+<body ng-class="{
+    'sidebar_main_active': primarySidebarActive && !miniSidebarActive && !topMenuActive && (!$state.is('login') && !$state.includes('error')),
+    'sidebar_main_open': primarySidebarOpen && !miniSidebarActive && !slimSidebarActive && !topMenuActive && largeScreen && (!$state.is('login') && !$state.includes('error')),
+    'sidebar_mini': miniSidebarActive && largeScreen && !topMenuActive && (!$state.is('login') && !$state.includes('error')),
+    'sidebar_slim sidebar_slim_inactive': slimSidebarActive && largeScreen && !topMenuActive && (!$state.is('login') && !$state.includes('error')),
+    'sidebar_main_hiding': primarySidebarHiding,
+    'sidebar_secondary_active': secondarySidebarActive && (!$state.is('login') && !$state.includes('error')),
+    'top_bar_active': toBarActive && (!$state.is('login') && !$state.includes('error')),
+    'page_heading_active': pageHeadingActive && (!$state.is('login') && !$state.includes('error')),
+    'header_double_height': headerDoubleHeightActive && (!$state.is('login') && !$state.includes('error')),
+    'main_search_active': mainSearchActive && (!$state.is('login') && !$state.includes('error')),
+    'header_full': fullHeaderActive && (!$state.is('login') && !$state.includes('error')),
+    'boxed_layout': boxedLayoutActive && (!$state.is('login') && !$state.includes('error')),
+    'login_page login_page_v2': $state.is('login'),
+    'error_page': $state.includes('error'),
+    'uk-height-1-1': page_full_height,
+    'footer_active': footerActive,
+    'main_search_persistent': mainSearchPersistent
+}" content-sidebar>
+    <div id="page_preloader" ng-hide="hidePreloader"><img src="/assets/img/page_preloader.gif" alt="" /></div>
+    <div ui-view id="main_view" ng-class="{'uk-height-1-1': page_full_height }"></div>
+
+    @RenderBody()
+
+    <!-- JS -->
+    <!-- common functions -->
+    <script src="/assets/js/common.min.js"></script>
+
+    <!-- ANGULAR -->
+    <script src="/assets/js/angular_common.min.js"></script>
+
+    <!-- 3rd party libs -->
+    <script src="/lib/underscore/underscore.min.js"></script>
+
+    <script src="/lib/momentjs/moment.min.js"></script>
+    <script src="/lib/momentjs/angular-moment.min.js"></script>
+
+    <script src="/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/lib/persiandate/persiandate.min.js"></script>
+    <script src="/js/util.min.js"></script>
+
+    @* core *@
+    <script src="/pages/core/app.js?ver=@ver"></script>
+    <script src="/pages/core/oclazyload.min.js?ver=@ver"></script>
+
+    <script src="/pages/core/services/BaseService.js?ver=@ver"></script>
+    <script src="/pages/core/services/BaseEntityService.js?ver=@ver"></script>
+    <script src="/pages/core/services/UpdatableEntityService.js?ver=@ver"></script>
+    <script src="/pages/core/services/GeneralEntityService.js?ver=@ver"></script>
+
+
+    <script src="/pages/core/controllers/BaseController.js?ver=@ver"></script>
+    <script src="/pages/core/controllers/BaseEntityController.js?ver=@ver"></script>
+    <script src="/pages/core/controllers/UpdatableEntityController.js?ver=@ver"></script>
+    <script src="/pages/core/controllers/GeneralEntityController.js?ver=@ver"></script>
+
+
+    <script src="/pages/core/directives.js?ver=@ver"></script>
+    <script src="/pages/core/statics.min.js?ver=@ver"></script>
+    <script src="/pages/core/dialogsOptions.min.js?ver=@ver"></script>
+    <script src="/pages/core/filters.js?ver=@ver"></script>
+    <script src="/pages/core/enums.js?ver=@ver"></script>
+
+    <script src="/app/app.factory.min.js?ver=@ver"></script>
+    <script src="/app/app.service.min.js?ver=@ver"></script>
+    <script src="/app/app.directive.js?ver=@ver"></script>
+    <script src="/app/app.filters.min.js?ver=@ver"></script>
+    <script src="/app/app.controller.min.js?ver=@ver"></script>
+
+    @* Common Enums *@
+    <script src="/pages/core/models/enums/ApplicationRole.js?ver=@ver"></script>
+    <script src="/pages/core/models/enums/ValueType.js?ver=@ver"></script>
+    <script src="/pages/core/models/enums/ConditionType.js?ver=@ver"></script>
+    <script src="/pages/core/models/enums/EventCategory.js?ver=@ver"></script>
+    <script src="/pages/core/models/enums/EventId.js?ver=@ver"></script>
+    <script src="/pages/core/models/enums/EventType.js?ver=@ver"></script>
+
+    @* Common Application Business Services *@
+    <script src="/pages/core/services/AccountService.js?ver=@ver"></script>
+
+    @* States *@
+    <script src="/pages/core/states.js?ver=@ver"></script>
+    <script src="/pages/DBO/states.js?ver=@ver"></script>
+    <script src="/pages/CNT/states.js?ver=@ver"></script>
+    <script src="/pages/SEC/states.js?ver=@ver"></script>
+
+</body>
+</html>

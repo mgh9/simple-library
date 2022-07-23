@@ -1,0 +1,208 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ assembly name="System.Linq" #>
+<#@ assembly name="System.Reflection" #>
+<#@ assembly name="$(SolutionDir)Core\FinLib.DomainClasses\bin\Debug\net6.0\FinLib.DomainClasses.dll" #>
+<#@ assembly name="$(SolutionDir)Core\FinLib.DomainClasses\bin\Debug\net6.0\FinLib.Models.dll" #>
+<#@ import namespace="System" #>  
+<#@ import namespace="System.Reflection" #>  
+<#@ import namespace="System.Linq" #>  
+<#@ import namespace="FinLib.DomainClasses" #>  
+<#@ import namespace="FinLib.DomainClasses.Base" #>
+
+using FinLib.Web.Api.Base;
+using FinLib.Services.Base;
+
+<#
+	bool isBaseEntityClass(Type type)
+	{
+		return type.Name == "IBaseEntity" || type.Name == "BaseEntity";
+	}
+
+	bool isUpdatableEntityClass(Type type)
+	{
+		return type.Name == "IUpdatableEntity" || type.Name == "UpdatableEntity";
+	}
+
+	bool isGeneralEntityClass(Type type)
+	{
+		return type.Name == "IGeneralEntity" || type.Name == "GeneralEntity";
+	}
+
+	bool isSubClassOfBaseEntity(Type type)
+	{
+		return typeof(IBaseEntity).IsAssignableFrom(type);
+	}
+
+	bool isSubClassOfGeneralEntity(Type type)
+	{
+		return typeof(IGeneralEntity).IsAssignableFrom(type);
+	}
+
+	bool isSubClassOfUpdatableEntity(Type type)
+	{
+		return typeof(IUpdatableEntity).IsAssignableFrom(type);
+	}
+
+	string getSchemaName(string fullTypeName)
+	{
+		string schemaName = fullTypeName;
+		
+		var nameParts = fullTypeName.Split('.');
+		if(nameParts.Length > 2)
+			schemaName = nameParts[2];
+
+		return schemaName;
+	}
+
+	string getSearchFilterClassName(Type type, string schemaName)
+	{		
+		var isGeneralEntity =  isSubClassOfGeneralEntity(type);
+		var isUpdatableEntity =  isSubClassOfUpdatableEntity(type);
+
+		var typeName = type.Name;
+
+		var dedicatedSearchFilterClass_FullName = $"FinLib.Models.SearchFilters.{schemaName}.{typeName}SearchFilter";
+		var searchFilterClassName = dedicatedSearchFilterClass_FullName;
+
+		var theModelsAssembly = typeof(FinLib.Models.Base.Dto.BaseDto).Assembly;
+		var dedicatedSearchFilterClass_Type = theModelsAssembly.GetType(dedicatedSearchFilterClass_FullName);
+
+		//
+		if(dedicatedSearchFilterClass_Type == null)
+		{
+			// the dedicated searchFilterClass for the entity doesnt exist, so, use the Base classes (CodeValueEntitySearchFilter, GeneralEntitySearchFilter, BaseEntitySearchFilter ,...)
+			if(isGeneralEntity)
+			{
+				searchFilterClassName = "FinLib.Models.Base.SearchFilters.GeneralEntitySearchFilter";
+			}
+			else if(isUpdatableEntity)
+			{
+				searchFilterClassName = "FinLib.Models.Base.SearchFilters.UpdatableEntitySearchFilter";
+			}
+			else
+			{
+				searchFilterClassName = "FinLib.Models.Base.SearchFilters.BaseEntitySearchFilter";
+			}
+		}
+		else
+		{
+			// that's ok..the entity has a Dedicated SearchFilterClass ~> use the dedicatedSearchFilterClass_FullName
+		}
+
+		return searchFilterClassName;
+	}
+
+	string getBaseEntityControllerClassName(Type type)
+	{
+		var itsBaseEntityClassName = "NA";
+
+		var isGeneralEntity =  isSubClassOfGeneralEntity(type);
+		var isUpdatableEntity =  isSubClassOfUpdatableEntity(type);
+
+		if(isGeneralEntity)
+		{
+			itsBaseEntityClassName = "Base.GeneralEntityController";
+		}
+		else if(isUpdatableEntity)
+		{
+			itsBaseEntityClassName = "Base.UpdatableEntityController";
+		}
+		else
+		{
+			itsBaseEntityClassName = "Base.BaseEntityController";
+		}
+
+		return itsBaseEntityClassName;
+	}
+
+	string getServiceTypeArgumentClassName(string fullTypeName, string schemaName)
+	{
+		var retval = fullTypeName.Replace( (".DomainClasses." + schemaName) , (".Services." + schemaName) );
+		retval += "Service";
+
+		return retval;
+	}
+
+	List<Type> getDomainEntities()
+	{	
+		Type[] types;
+		List<Type> retval= new List<Type>();
+		
+		try
+		{
+			types = typeof(IBaseEntity).Assembly.GetTypes();
+		}
+		catch (ReflectionTypeLoadException e)
+		{
+			types = e.Types;
+		}
+
+		foreach (var t in types.Where(t => t != null))
+		{
+			if(t==null)
+				continue;
+
+			retval.Add(t);
+		}
+		
+		return retval;
+	}
+
+	// ********************************
+	var theDomainEntities = getDomainEntities();
+	foreach (var theTypeItem in theDomainEntities)
+	{
+		if (!isSubClassOfBaseEntity(theTypeItem) /* only classes of our domains */
+						|| isBaseEntityClass(theTypeItem) 
+						|| isUpdatableEntityClass(theTypeItem)
+						|| isGeneralEntityClass(theTypeItem)) 
+		{
+			continue;
+		}
+
+		if(theTypeItem.IsAbstract)
+			continue;
+
+		var fullTypeName = theTypeItem.FullName;
+		
+		string schemaName = getSchemaName(fullTypeName);
+
+		var typeName = theTypeItem.Name;
+		var className = typeName;
+				
+		var dtoTypeName = fullTypeName.Replace(".DomainClasses.", ".Models.Dtos.");
+		var dtoClassName = dtoTypeName + "Dto";
+
+		var viewTypeName = fullTypeName.Replace(".DomainClasses.", ".Models.Views.");
+		var viewClassName = viewTypeName + "View";
+
+		// get the SearchFilter class name
+		var searchFilterClassName = getSearchFilterClassName(theTypeItem, schemaName);
+
+		//
+		var theServiceClassName = className + "Service";
+		string itsBaseClassName = getBaseEntityControllerClassName(theTypeItem);;		
+
+		// Service typeArgument
+		var theServiceTypeName = getServiceTypeArgumentClassName(fullTypeName, schemaName);
+
+		// the ControllerName
+		var theControllerClassName = className + "Controller";
+#>
+namespace FinLib.Web.Api.<#= schemaName #>
+{  
+	public partial class <#= theControllerClassName #> : <#= itsBaseClassName #> <<#= fullTypeName #>, <#= dtoClassName #>, <#= viewClassName #>, <#= theServiceTypeName #>, <#= searchFilterClassName #> >
+	{
+		public <#= className #>Controller(ICommonServicesProvider<Models.Configs.GlobalSettings>commonServicesProvider, <#= theServiceTypeName #> service)
+            :base(commonServicesProvider, service)
+        {
+
+        }
+	}
+}
+
+<#	} #>

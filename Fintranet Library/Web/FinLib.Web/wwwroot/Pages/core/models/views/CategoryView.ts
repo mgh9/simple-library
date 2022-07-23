@@ -1,0 +1,5 @@
+﻿
+
+interface ICategoryView extends IGeneralView {
+    
+}

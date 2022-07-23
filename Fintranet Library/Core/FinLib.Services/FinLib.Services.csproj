@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\_ServicesGenerator.tt">
+      <Generator>TextTemplatingFileGeneratorCore</Generator>
+      <LastGenOutput>_ServicesGenerator.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Templates\_ServicesGenerator.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_ServicesGenerator.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Providers\FinLib.Providers.Configuration\FinLib.Providers.Configuration.csproj" />
+    <ProjectReference Include="..\..\Providers\FinLib.Providers.Identity\FinLib.Providers.Identity.csproj" />
+    <ProjectReference Include="..\..\Providers\FinLib.Providers.Logging\FinLib.Providers.Logging.csproj" />
+    <ProjectReference Include="..\..\Shared\FinLib.Common\FinLib.Common.csproj" />
+    <ProjectReference Include="..\FinLib.DataLayer\FinLib.DataLayer.csproj" />
+    <ProjectReference Include="..\FinLib.DomainClasses\FinLib.DomainClasses.csproj" />
+    <ProjectReference Include="..\FinLib.Mappings\FinLib.Mappings.csproj" />
+    <ProjectReference Include="..\FinLib.Models\FinLib.Models.csproj" />
+  </ItemGroup>
+
+</Project>

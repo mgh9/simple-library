@@ -1,0 +1,298 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site-bundle.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/css/bootstrap.css",
+      "wwwroot/fonts/font-awesome/css/all.css",
+      "wwwroot/css/site.css",
+      "wwwroot/css/util.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/site-bundle.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/jquery.min.js",
+      "wwwroot/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js",
+      "wwwroot/lib/bootstrap/js/bootstrap.bundle.min.js",
+      "wwwroot/js/util.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "preserveImportantComments": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/util.min.css",
+    "inputFiles": [
+      "wwwroot/css/util.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/fonts/font-awesome/css/all.min.css",
+    "inputFiles": [
+      "wwwroot/fonts/font-awesome/css/all.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/fonts/font-awesome/css/solid.min.css",
+    "inputFiles": [
+      "wwwroot/fonts/font-awesome/css/solid.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/common.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/common.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/util.min.js",
+    "inputFiles": [
+      "wwwroot/js/util.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/underscore/underscore.min.js",
+    "inputFiles": [
+      "wwwroot/lib/underscore/underscore.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/altair_app.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/altair_app.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/altair_lp_common.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/altair_lp_common.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/persiandate/persiandate.min.js",
+    "inputFiles": [
+      "wwwroot/lib/persiandate/persiandate.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/app.controller.min.js",
+    "inputFiles": [
+      "wwwroot/app/app.controller.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/app.directive.min.js",
+    "inputFiles": [
+      "wwwroot/app/app.directive.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/app.factory.min.js",
+    "inputFiles": [
+      "wwwroot/app/app.factory.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/app.filters.min.js",
+    "inputFiles": [
+      "wwwroot/app/app.filters.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/app.service.min.js",
+    "inputFiles": [
+      "wwwroot/app/app.service.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/app.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/app.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/oclazyload.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/oclazyload.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/filters.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/filters.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/directives.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/directives.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/statics.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/statics.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/states.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/states.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/enums.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/enums.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Pages/core/dialogsOptions.min.js",
+    "inputFiles": [
+      "wwwroot/Pages/core/dialogsOptions.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/uikit.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/uikit.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/tinymce/langs/ar.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/tinymce/langs/ar.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/echarts/maps/china.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/echarts/maps/china.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/echarts/maps/world.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/echarts/maps/world.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/dropify/gulpfile.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/dropify/gulpfile.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/dropify/dist/css/demo.min.css",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/dropify/dist/css/demo.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/datatables/buttons.uikit.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/datatables/buttons.uikit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/datatables/datatables.uikit.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/datatables/datatables.uikit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/skins/ckeditor/material_design/skin.min.js",
+    "inputFiles": [
+      "wwwroot/assets/skins/ckeditor/material_design/skin.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/ie.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/ie.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/final_site.min.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/final_site.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/print.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/print.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/icons/material-design-icons/material-icons.min.css",
+    "inputFiles": [
+      "wwwroot/assets/icons/material-design-icons/material-icons.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/dropify/src/js/dropify.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/dropify/src/js/dropify.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/angular-localForage/angular-localForage.min.js",
+    "inputFiles": [
+      "wwwroot/lib/angular-localForage/angular-localForage.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/angular-ui-calendar/src/calendar.min.js",
+    "inputFiles": [
+      "wwwroot/lib/angular-ui-calendar/src/calendar.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/angularUtils-pagination/dirPagination.min.js",
+    "inputFiles": [
+      "wwwroot/lib/angularUtils-pagination/dirPagination.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/ion.rangeslider/css/normalize.min.css",
+    "inputFiles": [
+      "wwwroot/lib/ion.rangeslider/css/normalize.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/prism/prism.min.js",
+    "inputFiles": [
+      "wwwroot/lib/prism/prism.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/angucomplete-alt/angucomplete-alt.min.css",
+    "inputFiles": [
+      "wwwroot/lib/angucomplete-alt/angucomplete-alt.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/c3-angular/c3-angular.min.js",
+    "inputFiles": [
+      "wwwroot/lib/c3-angular/c3-angular.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/main.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/main.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/angularjs/styles.min.css",
+    "inputFiles": [
+      "wwwroot/css/angularjs/styles.css"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+﻿
+
+interface IUserRoleView extends IUpdatableView {
+    
+}

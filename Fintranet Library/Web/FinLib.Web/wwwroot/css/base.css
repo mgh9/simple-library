@@ -1,0 +1,15 @@
+﻿@font-face {
+  font-family: "WYekan";
+  src: url("/fonts/persian/yekan/24659979.eot");
+  src: url("/fonts/persian/yekan/24659979.eot?#iefix") format("embedded-opentype"), url("/fonts/persian/yekan/9a3fc3d8.woff2") format("woff2"), url("/fonts/persian/yekan/b7443b71.woff") format("woff"), url("/fonts/persian/yekan/29a4348a.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+html,
+body {
+  height: 100%;
+  font-family: WYekan, Tahoma;
+  direction: ltr;
+  text-align: left;
+}

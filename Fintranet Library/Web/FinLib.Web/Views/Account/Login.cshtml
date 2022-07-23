@@ -1,0 +1,132 @@
+﻿@using FinLib.Services;
+@using DNTCaptcha.Core;
+
+@addTagHelper *, DNTCaptcha.Core
+
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container h-100 align-items-center text-dark">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card login-form">
+
+            <div class="card-header login-form__header">
+                <div class="login-form__client-icon-box">
+                    <img class="login-form__client-icon"
+                         alt="Logo"
+                         src="/images/library-icon.png"
+                         width="640" height="360"
+                         asp-append-version="true" />
+                </div>
+                <h3 class="card-title text-light m-t-70">Login to FinLibrary</h3>
+            </div>
+
+            <div class="card-body">
+                <form action="/Account/Login" method="post" id="login_form" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" asp-for="@Model.ReturnUrl" />
+
+                    <div>
+                        <div class="input-group form-group ltr">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+
+                            <input asp-for="Username"
+                                   placeholder="Username"
+                                   title="Username"
+                                   maxlength="30"
+                                   autocomplete="off"
+                                   required="required"
+                                   class="form-control form-control-lg"
+                                   oninvalid="this.setCustomValidity('Please enter your username')"
+                                   oninput="this.setCustomValidity('')" />
+                        </div>
+
+                        <span asp-validation-for="Username" class="text-danger text-left"></span>
+                    </div>
+
+                    <div>
+                        <div class="input-group form-group ltr">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   placeholder="Password" ,
+                                   maxlength="30"
+                                   required="required"
+                                   autocomplete="off"
+                                   oninvalid="this.setCustomValidity('Please enter your password')"
+                                   oninput="this.setCustomValidity('')"
+                                   class="form-control form-control-lg" />
+
+                        </div>
+
+                        <span asp-validation-for="Password" class="text-danger text-left"></span>
+                    </div>
+
+                    @if (Model.IsCaptchaEnabled)
+                    {
+                        @Html.HiddenFor(model => model.IsCaptchaEnabled)
+
+                        <hr />
+                        <div class="input-group">
+                            @Html.Label("Captcha", "Captcha code", new { @class = "m-t-4" })
+
+                            <div class="controls col col-md-10">
+                                <dnt-captcha asp-captcha-generator-min=4
+                                             asp-captcha-generator-max=6
+                                             asp-captcha-generator-language="English"
+                                             asp-captcha-generator-display-mode="NumberToWord"
+                                             asp-use-relative-urls="true"
+                                             asp-placeholder="Security code as a number"
+                                             asp-validation-error-message="Please enter the security code inside the image"
+                                             asp-font-name="Tahoma"
+                                             asp-font-size="20"
+                                             asp-fore-color="#333333"
+                                             asp-back-color="#ccc"
+                                             asp-text-box-class="form-control form-control-lg single-line"
+                                             asp-text-box-template="<div class='input-group ltr'><span class='input-group-addon'><span class='glyphicon glyphicon-lock'></span></span>{0}</div>"
+                                             asp-validation-message-class="text-danger"
+                                             asp-refresh-button-class="btn fas fa-sync"
+                                             title="Please enter the security code inside the image as a number" />
+
+                            </div>
+                        </div>
+                    }
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger text-left" })
+
+                    <hr />
+                    <div class="form-group mt-3">
+                        <button type="submit" value="login" name="button" id="login_button" class="btn btn-lg btn-primary w-100">
+                            Login...
+                        </button>
+                    </div>
+
+@*                    <div class="col text-left">
+                        @Html.ActionLink("I forgot my password", "RecoverPassword", "Account")
+                    </div>
+*@                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('#DNTCaptchaInputText').not(this).attr("oninput", "setCustomValidity('')");
+            $('#DNTCaptchaInputText').not(this).attr("oninvalid", "setCustomValidity('Enter the security code as a number')");
+        });
+    </script>
+}

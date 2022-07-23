@@ -1,0 +1,7 @@
+﻿
+
+
+interface IChangePassword {
+    canUserChangeHisPassword: boolean;
+    
+}

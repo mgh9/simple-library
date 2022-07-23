@@ -1,0 +1,154 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ assembly name="System.Linq" #>
+<#@ assembly name="System.Reflection" #>
+<#@ assembly name="$(SolutionDir)Core\FinLib.DomainClasses\bin\Debug\net6.0\FinLib.DomainClasses.dll" #>
+<#@ import namespace="System" #>  
+<#@ import namespace="System.Reflection" #>  
+<#@ import namespace="System.Linq" #>  
+<#@ import namespace="FinLib.DomainClasses" #>  
+<#@ import namespace="FinLib.DomainClasses.Base" #>
+<#@ import namespace="System.IO" #>  
+<#@ import namespace="System.Text" #>  
+
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.AspNetCore.Identity;
+
+<#
+	
+	bool isBaseEntityClass(Type type)
+	{
+		return type.Name == "IBaseEntity" || type.Name == "BaseEntity";
+	}
+
+	bool isUpdatableEntityClass(Type type)
+	{
+		return type.Name == "IUpdatableEntity" || type.Name == "UpdatableEntity";
+	}
+
+	bool isGeneralEntityClass(Type type)
+	{
+		return type.Name == "IGeneralEntity" || type.Name == "GeneralEntity";
+	}
+
+	bool isSubClassOfBaseEntity(Type type)
+	{
+		return typeof(IBaseEntity).IsAssignableFrom(type);
+	}
+
+	bool isSubClassOfGeneralEntity(Type type)
+	{
+		return typeof(IGeneralEntity).IsAssignableFrom(type);
+	}
+
+	bool isSubClassOfUpdatableEntity(Type type)
+	{
+		return typeof(IUpdatableEntity).IsAssignableFrom(type);
+	}
+
+	string getBaseEntityConfigurationClassName(Type type)
+	{
+		var itsBaseEntityClassName = "NA";
+
+		var isGeneralEntity =  isSubClassOfGeneralEntity(type);
+		var isUpdatableEntity =  isSubClassOfUpdatableEntity(type);
+
+		if(isGeneralEntity)
+		{
+			itsBaseEntityClassName = "Base.GeneralEntityConfiguration";
+		}
+		else if(isUpdatableEntity)
+		{
+			itsBaseEntityClassName = "Base.UpdatableEntityConfiguration";
+		}
+		else
+		{
+			itsBaseEntityClassName = "Base.BaseEntityConfiguration";
+		}
+
+		return itsBaseEntityClassName;
+	}
+
+	string getSchemaName(string fullTypeName)
+	{
+		string schemaName = fullTypeName;
+		
+		var nameParts = fullTypeName.Split('.');
+		if(nameParts.Length > 2)
+			schemaName = nameParts[2];
+
+		return schemaName;
+	}
+
+	List<Type> getDomainEntities()
+	{	
+		Type[] types;
+		List<Type> retval= new List<Type>();
+		
+		try
+		{
+			types = typeof(IBaseEntity).Assembly.GetTypes();
+		}
+		catch (ReflectionTypeLoadException ex)
+		{
+			types = ex.Types;
+		}		
+
+		foreach (var t in types.Where(t => t != null))
+		{
+			if(t==null)
+				continue;
+
+			retval.Add(t);
+		}
+
+		return retval;
+	}
+
+	// ********************************
+	var theDomainEntities = getDomainEntities();
+	foreach (var theTypeItem in theDomainEntities)
+	{
+		if (!isSubClassOfBaseEntity(theTypeItem) /* only classes of our domains */
+						|| isBaseEntityClass(theTypeItem) 
+						|| isUpdatableEntityClass(theTypeItem)
+						|| isGeneralEntityClass(theTypeItem)) 
+		{
+			continue;
+		}
+		
+		if(theTypeItem.IsAbstract)
+			continue;
+
+		var fullTypeName = theTypeItem.FullName;
+		
+		string schemaName = getSchemaName(fullTypeName);
+
+		var typeName = theTypeItem.Name;
+		//var className = getPluralName(typeName);
+		var className = typeName;
+
+		// Base Configuration className
+		var theEntityConfigurationClassName = className + "Configuration";
+		string itsBaseClassName = getBaseEntityConfigurationClassName(theTypeItem);
+
+		// Base Configuration class TypeArgument
+		//itsBaseClassName= itsBaseClassName + "<"+ className + ">";
+#>
+namespace FinLib.DataLayer.Configurations.<#= schemaName #>
+{  
+	public partial class <#= theEntityConfigurationClassName #> : <#=itsBaseClassName#> <<#= fullTypeName #>>
+	{
+	    public override void Configure(EntityTypeBuilder<<#=fullTypeName #>> builder)
+        {
+            base.Configure(builder);
+
+			this.AdditionalConfigure(builder);
+        }
+	}
+}
+
+<#	} #>

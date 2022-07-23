@@ -1,0 +1,295 @@
+﻿<div id="page_content">
+    <div id="page_content_inner">
+        <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
+            <div class="uk-width-large-7-10">
+                <div class="md-card">
+                    <div class="user_heading">
+
+                        <div class="user_heading_avatar">
+                            <div class="thumbnail">
+                                <img ng-src="{{userProfile.imageAbsoluteUrl}}" alt="user avatar" />
+                            </div>
+                        </div>
+
+                        <div class="user_heading_content">
+                            <h2 class="heading_b uk-margin-bottom">
+                                <span class="uk-text-truncate">{{userProfile.fullName}}</span>
+                                <span class="sub-heading">{{userProfile.userName}}</span>
+                            </h2>
+
+                        </div>
+
+                        <a class="md-fab md-fab-small uk-margin-large-right"
+                           title="Edit"
+                           ng-class="{ 'md-fab-accent': !isEditMode, 'md-fab-warning': isEditMode}"
+                           ng-click="self.updateProfile()">
+                            <i class="material-icons" ng-show="!isEditMode">&#xE150;</i>
+                            <i class="material-icons" ng-show="isEditMode">&#xE161;</i>
+                        </a>
+
+                        <a class="md-fab md-fab-small md-fab-accent"
+                           ng-show="!isEditMode"
+                           ng-click="self.showChangePasswordDialog()">
+                            <i class="material-icons" title="Change password">vpn_key</i>
+                        </a>
+
+                    </div>
+
+                    <div class="user_content">
+                        <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
+                            <li class="uk-active user-info-tab">
+                                <a href="#">
+                                    {{isEditMode ? 'Edit' : 'Profile info'}}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- readonly -->
+                        <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
+
+                          
+
+
+                            <!--------------------------->
+                            <li>
+                                                                
+                                <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
+
+                                    <div class="uk-width-large-1-2" ng-hide="isEditMode">
+                                        <h4 class="heading_c uk-margin-small-bottom">Your profile</h4>
+                                        <ul class="md-list md-list-addon">
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_very_satisfied</i>
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted">Fullname</span>
+                                                    <span class="md-list-heading">{{userProfile.fullName}}</span>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_satisfied</i>
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted">Gender</span>
+                                                    <span class="md-list-heading">{{userProfile.gender | toGenderString}}</span>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_neutral</i>
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted">Username</span>
+                                                    <span class="md-list-heading">{{userProfile.userName}}</span>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    <i class="md-list-addon-icon material-icons">&#xE158;</i>
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted"></span>
+                                                    <span class="md-list-heading">{{userProfile.email}}</span>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    <i class="md-list-addon-icon material-icons">smartphone</i>
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="uk-text-small uk-text-muted">Mobile</span>
+                                                    <span class="md-list-heading">{{userProfile.mobile}}</span>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                    <div class="uk-width-large-1-2" ng-show="isEditMode">
+                                        <h4 class="heading_c uk-margin-small-bottom">Profile</h4>
+
+                                        <div class="uk-form-row">
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_satisfied</i>
+                                                </span>
+                                                <div class="md-input-wrapper">
+                                                    <label>Firstname</label>
+                                                    <input type="text" class="md-input" ng-model="userProfileForEdit.firstName" md-input maxlength="30" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uk-form-row">
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_satisfied</i>
+                                                </span>
+                                                <div class="md-input-wrapper">
+                                                    <label>Lastname</label>
+                                                    <input type="text" class="md-input" ng-model="userProfileForEdit.lastName" md-input maxlength="30" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uk-form-row">
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon">
+                                                    <i class="md-list-addon-icon material-icons">sentiment_very_satisfied</i>
+                                                </span>
+                                                <label>Gender</label>
+                                                <div class="md-input-wrapper">
+                                                    <input type="text"
+                                                           config="gendersConfig"
+                                                           options="genders"
+                                                           ng-model="userProfileForEdit.gender"
+                                                           selectize />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uk-form-row">
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon">
+                                                    <i class="md-list-addon-icon material-icons">smartphone</i>
+                                                </span>
+                                                <div class="md-input-wrapper">
+                                                    <label>Mobile</label>
+                                                    <input type="text" maxlength="11" class="md-input ltr" ng-model="userProfileForEdit.mobile" md-input numbers-only />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uk-form-row">
+                                            <button class="md-btn md-btn-primary" ng-click="self.updateProfile()">Save</button>
+                                            <button class="md-btn md-btn-danger" ng-click="self.cancelUpdateProfile()">Cancel</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+
+                        </ul>
+
+
+
+
+                        <!--change password dialog-->
+                        <div id="change-password-dialog" class="uk-modal">
+                            <div class="uk-modal-dialog">
+                                <div class="uk-modal-header">
+                                    <h3 class="uk-modal-title">Change password</h3>
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-small-1-1">
+                                            <label>Your current password</label>
+                                            <input type="password" class="md-input"
+                                                   ng-model="changePasswordModel.currentPassword"
+                                                   maxlength="30"
+                                                   md-input />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="uk-alert uk-alert-info" data-uk-alert>
+                                    <a href="" class="uk-alert-close uk-close"></a>
+                                    <ul>
+                                        <li ng-show="passwordLengthPolicyText">
+                                            {{passwordLengthPolicyText}}
+                                        </li>
+                                        <li ng-show="passwordDigitRequirePolicyText">
+                                            {{passwordDigitRequirePolicyText}}
+                                        </li>
+                                        <li ng-show="passwordNonAlphabetRequirePolicyText">
+                                            {{passwordNonAlphabetRequirePolicyText}}
+                                        </li>
+                                        <li ng-show="passwordUppercaseRequirePolicyText">
+                                            {{passwordUppercaseRequirePolicyText}}
+                                        </li>
+                                        <li ng-show="passwordLowercaseRequirePolicyText">
+                                            {{passwordLowercaseRequirePolicyText}}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-small-1-1">
+                                            <label>New password</label>
+                                            <input type="password" class="md-input"
+                                                   ng-model="changePasswordModel.newPassword"
+                                                   maxlength="30"
+                                                   md-input />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="uk-form-row">
+                                    <div class="uk-grid">
+                                        <div class="uk-width-small-1-1">
+                                            <label>Repeat your new password</label>
+                                            <input type="password" class="md-input"
+                                                   ng-model="changePasswordModel.newPasswordRepeat"
+                                                   maxlength="30"
+                                                   md-input />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="uk-modal-footer uk-text-right">
+                                    <button type="button" class="md-btn md-btn-success"
+                                            ng-click="self.changePassword($event)">
+                                        Change my password
+                                    </button>
+                                    <button type="button" class="md-btn md-btn-warning"
+                                            ng-click="self.cancelChangePassword($event)">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-large-3-10">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-medium-bottom">
+                            <h3 class="heading_c uk-margin-bottom">My last logins</h3>
+                            <ul class="md-list md-list-addon">
+                                <li ng-repeat="auditItem in audits">
+                                    <!--<div class="md-list-addon-element" title="{{auditItem.StatusDescription}}">
+                                        <i class="md-list-addon-icon material-icons uk-text-warning" ng-if="entarnceAuditItem.status == 'warning'">&#xE8B2;</i>
+                                        <i class="md-list-addon-icon material-icons uk-text-success" ng-if="entarnceAuditItem.status == 'success'">&#xE88F;</i>
+                                        <i class="md-list-addon-icon material-icons uk-text-danger" ng-if="entarnceAuditItem.status == 'danger'">&#xE001;</i>
+                                    </div>-->
+                                    <div class="md-list-content">
+                                        <span class="md-list-heading">{{auditItem.eventId | toEventIdString }}</span>
+                                        <span class="uk-text-small uk-text-muted" am-time-ago="auditItem.createDate"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--<a class="md-btn md-btn-flat md-btn-flat-primary" href="#">Show all</a>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

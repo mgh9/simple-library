@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\FinLib.Common\FinLib.Common.csproj" />
+    <ProjectReference Include="..\FinLib.DomainClasses\FinLib.DomainClasses.csproj" />
+    <ProjectReference Include="..\FinLib.Models\FinLib.Models.csproj" />
+  </ItemGroup>
+
+</Project>

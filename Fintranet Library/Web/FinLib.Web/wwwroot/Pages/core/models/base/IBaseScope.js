@@ -1,0 +1,1 @@
+//# sourceMappingURL=IBaseScope.js.map

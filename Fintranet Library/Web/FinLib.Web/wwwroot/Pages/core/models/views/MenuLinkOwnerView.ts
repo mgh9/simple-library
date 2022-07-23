@@ -1,0 +1,5 @@
+﻿
+
+interface IMenuLinkOwnerView extends IUpdatableView {
+    
+}

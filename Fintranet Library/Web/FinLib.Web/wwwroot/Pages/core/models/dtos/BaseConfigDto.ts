@@ -1,0 +1,8 @@
+﻿
+
+
+
+
+interface IBaseConfigDto extends IBaseDto 
+{   
+}

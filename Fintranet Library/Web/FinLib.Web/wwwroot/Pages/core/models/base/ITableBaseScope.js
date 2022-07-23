@@ -1,0 +1,1 @@
+//# sourceMappingURL=ITableBaseScope.js.map

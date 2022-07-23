@@ -1,0 +1,14 @@
+    <!-- header -->
+<div oc-lazy-load="['pages/shared/header/headerController.js?ver=' + $root.ver,'pages/shared/header/headerService.js?ver=' + $root.ver]">
+    <div ng-include="'pages/shared/header/headerView.html?ver=' + $root.ver" ng-controller="HeaderController"></div>
+</div>
+<!-- restricted main content -->
+<div ui-view ng-class="{ 'uk-height-1-1': page_full_height }"></div>
+<!-- main sidebar -->
+<div oc-lazy-load="['pages/shared/mainSidebar/mainSidebarService.js?ver=' + $root.ver,'pages/shared/mainSidebar/mainSidebarController.js?ver=' + $root.ver]" ng-hide="topMenuActive">
+    <div ng-include="'pages/shared/mainSidebar/mainSidebarView.html?ver=' + $root.ver" ng-controller="MainSidebarController"></div>
+</div>
+<!-- style switcher -->
+<div oc-lazy-load="['assets/css/styleSwitcher.min.css?ver=' + $root.ver,'pages/shared/styleSwitcher/styleSwitcher.js?ver=' + $root.ver]">
+    <style-switcher></style-switcher>
+</div>

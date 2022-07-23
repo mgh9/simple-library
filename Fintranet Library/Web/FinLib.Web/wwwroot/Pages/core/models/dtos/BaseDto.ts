@@ -1,0 +1,8 @@
+﻿
+
+
+
+
+interface IBaseDto extends IBaseDtoExtended 
+{   
+}

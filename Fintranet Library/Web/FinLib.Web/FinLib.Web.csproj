@@ -1,0 +1,186 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\lib\underscore\underscore.js" />
+    <None Include="wwwroot\lib\underscore\underscore.js.map" />
+    <None Include="wwwroot\lib\underscore\underscore.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DNTCaptcha.Core" Version="4.3.3" />
+    <PackageReference Include="jquery.TypeScript.DefinitelyTyped" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.7.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
+    <PackageReference Include="Wangkanai.Detection" Version="5.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\FinLib.DataLayer\FinLib.DataLayer.csproj" />
+    <ProjectReference Include="..\..\Core\FinLib.DomainClasses\FinLib.DomainClasses.csproj" />
+    <ProjectReference Include="..\..\Core\FinLib.Models\FinLib.Models.csproj" />
+    <ProjectReference Include="..\..\Core\FinLib.Services\FinLib.Services.csproj" />
+    <ProjectReference Include="..\..\Providers\FinLib.Providers.Database\FinLib.Providers.Database.csproj" />
+    <ProjectReference Include="..\FinLib.Web.Api\FinLib.Web.Api.csproj" />
+    <ProjectReference Include="..\FinLib.Web.Shared\FinLib.Web.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Pages\core\models\configs\ChangePassword.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Configs\Identity\ChangePassword.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\configs\PasswordPolicy.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Configs\Identity\PasswordPolicy.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\BaseDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\Dto\BaseDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\BaseEntityDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\Dto\BaseEntityDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\BookBorrowingDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\DBO\BookBorrowingDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\BookDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\DBO\BookDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\CategoryDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\DBO\CategoryDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\GeneralDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\Dto\GeneralDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\GetByUserRoleIdRequestDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\GetByUserRoleIdRequestDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\GetRequestDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\GetRequestDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\GetResultDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\GetResultDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\MenuLinkDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\CNT\MenuLinkDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\MenuLinkOwnerDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\CNT\MenuLinkOwnerDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\RoleDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SEC\RoleDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\SearchAutocompleteDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SearchAutocompleteDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\UpdatableDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\Dto\UpdatableDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\UserDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SEC\UserDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\UserInfoDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SEC\UserInfoDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\UserProfileDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SEC\UserProfileDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\dtos\UserRoleDto.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Dto\SEC\UserRoleDto.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\ApplicationRole.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\ApplicationRole.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\ConditionType.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\ConditionType.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\DatabaseName.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\DatabaseName.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\EventCategory.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\EventCategory.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\EventId.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\EventId.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\EventType.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\EventType.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\Gender.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\Gender.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\enums\ValueType.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Enums\ValueType.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\searchFilters\BaseEntitySearchFilter.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\SearchFilters\BaseEntitySearchFilter.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\searchFilters\GeneralEntitySearchFilter.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\SearchFilters\GeneralEntitySearchFilter.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\searchFilters\MenuLinkSearchFilter.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\SearchFilters\CNT\MenuLinkSearchFilter.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\searchFilters\UpdatableEntitySearchFilter.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\SearchFilters\UpdatableEntitySearchFilter.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\searchFilters\UserSearchFilter.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\SearchFilters\SEC\UserSearchFilter.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\BaseEntityView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\View\BaseEntityView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\BaseView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\View\BaseView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\BookBorrowingView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\DBO\BookBorrowingView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\BookView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\DBO\BookView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\CategoryView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\DBO\CategoryView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\GeneralView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\View\GeneralView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\MenuLinkOwnerView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\CNT\MenuLinkOwnerView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\MenuLinkView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\CNT\MenuLinkView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\RoleView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\SEC\RoleView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\UpdatableView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Base\View\UpdatableView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\UserRoleView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\SEC\UserRoleView.cs</CustomToolNamespace>
+    </Content>
+    <Content Update="wwwroot\Pages\core\models\views\UserView.ts">
+      <CustomToolNamespace>..\..\Core\FinLib.Models\Views\SEC\UserView.cs</CustomToolNamespace>
+    </Content>
+  </ItemGroup>
+
+</Project>

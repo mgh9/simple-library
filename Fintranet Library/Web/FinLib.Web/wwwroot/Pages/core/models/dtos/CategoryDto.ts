@@ -1,0 +1,8 @@
+﻿
+
+
+
+
+interface ICategoryDto extends IGeneralDto 
+{   
+}

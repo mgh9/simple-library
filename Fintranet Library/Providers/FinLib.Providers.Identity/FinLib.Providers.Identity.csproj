@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\FinLib.DataLayer\FinLib.DataLayer.csproj" />
+    <ProjectReference Include="..\..\Core\FinLib.DomainClasses\FinLib.DomainClasses.csproj" />
+    <ProjectReference Include="..\FinLib.Providers.Logging\FinLib.Providers.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

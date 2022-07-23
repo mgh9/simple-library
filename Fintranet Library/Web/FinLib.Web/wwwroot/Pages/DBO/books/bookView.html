@@ -1,0 +1,151 @@
+﻿<div id="page_content">
+
+    <div id="page_heading">
+        <div class="heading_actions">
+            <a href="javascript: void(0)" data-uk-tooltip="{pos:'bottom'}"
+               ng-click="self.toggleFilter()"
+               title="Search"><i ng-class="{ 'md-color-blue-500': isFilterActive }" class="md-icon material-icons">&#xE8B6;</i></a>
+        </div>
+        <h1>{{state_title}}</h1>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-3-10">
+                    <label>Title</label>
+                    <input type="text" class="md-input"
+                           ng-model="request.searchFilterModel.title.value"
+                           maxlength="30"
+                           md-input />
+                </div>
+
+                <div class="uk-width-small-2-10 uk-margin-small-top">
+                    <input type="text"
+                           config="categoriesForSearchFilterConfig"
+                           options="categoriesForSearchFilter"
+                           ng-model="request.searchFilterModel.categoryId.value"
+                           selectize />
+                </div>
+
+                <div class="uk-width-small-3-10">
+                    <div>
+                        <label>Status</label>
+                        <div class="uk-margin-small-top">
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_undefined" icheck ng-value="undefined"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_undefined" class="inline-label">All</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_true" icheck ng-value="true"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_true" class="inline-label">Active</label>
+                            </span>
+                            <span class="icheck-inline">
+                                <input type="radio" id="isActive_false" icheck ng-value="false"
+                                       ng-model="request.searchFilterModel.isActive.value" />
+                                <label for="isActive_false" class="inline-label">Inactive</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <button type="button" class="md-btn md-btn-primary uk-margin-top uk-float-left"
+                            ng-click="self.filterTable($event)">
+                        Search
+                    </button>
+                    <button type="button" class="md-btn md-btn-danger uk-margin-top"
+                            ng-click="self.clearSearchFilters()">
+                        Clear filters
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="page_content_inner">
+        <div class="md-card">
+            <div class="md-card-content">
+                <grid-view></grid-view>
+            </div>
+        </div>
+
+        <div id="edit-dialog" class="uk-modal">
+            <div class="uk-modal-dialog">
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Edit menu</h3>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-small-1-1">
+                                <label>Category</label>
+                                <input type="text"
+                                       config="selectizeConfig"
+                                       options="categories"
+                                       ng-model="entity.categoryId"
+                                       selectize />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-small-2-4">
+                                <label>Title</label>
+                                <input type="text" class="md-input"
+                                       ng-model="entity.title"
+                                       ng-enter="self.save($event)"
+                                       maxlength="30"
+                                       md-input />
+                            </div>
+                            <div class="uk-width-small-1-4">
+                                <label>Status</label>
+                                <div class="uk-margin-small-top">
+                                    <p>
+                                        <input type="checkbox" name="isActive" id="isActive" icheck ng-model="entity.isActive" />
+                                        <label for="isActive" class="inline-label">Active</label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-small-1-1">
+                                <label>Description</label>
+                                <textarea class="md-input"
+                                          ng-model="entity.description"
+                                          maxlength="100"
+                                          md-input></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-success"
+                            ng-click="self.save($event)">
+                        Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-warning"
+                            ng-click="self.cancel($event)">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md-fab-wrapper">
+            <a class="md-fab md-fab-success btn-add" href="#" ng-click="self.add($event)">
+                <i class="material-icons">&#xE145;</i>
+            </a>
+        </div>
+
+    </div>
+
+</div>

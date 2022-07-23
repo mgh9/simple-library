@@ -1,0 +1,108 @@
+﻿<div id="page_content">
+
+    <div id="page_heading">
+        <div class="heading_actions">
+            <a href="javascript: void(0)" data-uk-tooltip="{pos:'bottom'}"
+               ng-click="self.toggleFilter()"
+               title="Search"><i ng-class="{ 'md-color-blue-500': isFilterActive }" class="md-icon material-icons">&#xE8B6;</i></a>
+        </div>
+        <h1>{{state_title}}</h1>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-2-10 uk-margin-small-top">
+                    <input type="text"
+                           config="booksForSearchFilterConfig"
+                           options="booksForSearchFilter"
+                           ng-model="request.searchFilterModel.bookId.value"
+                           selectize />
+                </div>
+
+                <div class="uk-width-small-2-10 uk-margin-small-top">
+                    <input type="text"
+                           config="customersForSearchFilterConfig"
+                           options="customersForSearchFilter"
+                           ng-model="request.searchFilterModel.customerUserRoleId.value"
+                           selectize />
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <button type="button" class="md-btn md-btn-primary uk-margin-top uk-float-left"
+                            ng-click="self.filterTable($event)">
+                        Search
+                    </button>
+                    <button type="button" class="md-btn md-btn-danger uk-margin-top"
+                            ng-click="self.clearSearchFilters()">
+                        Clear filters
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="page_content_inner">
+        <div class="md-card">
+            <div class="md-card-content">
+                <grid-view></grid-view>
+            </div>
+        </div>
+
+        <div id="edit-dialog" class="uk-modal">
+            <div class="uk-modal-dialog">
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Borrow a book</h3>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-small-4-4">
+                                <label>Book</label>
+                                <input type="text"
+                                       config="selectizeConfig"
+                                       options="books"
+                                       ng-model="entity.bookId"
+                                       ng-change="self.refreshBooks()"
+                                       selectize />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-grid">
+                            <div class="uk-width-small-4-4">
+                                <label>Customer</label>
+                                <input type="text"
+                                       config="selectizeConfig"
+                                       options="customers"
+                                       ng-model="entity.customerUserRoleId"
+                                       selectize />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="md-btn md-btn-success"
+                            ng-click="self.save($event)">
+                        Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-warning"
+                            ng-click="self.cancel($event)">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md-fab-wrapper">
+            <a class="md-fab md-fab-success btn-add" href="#" ng-click="self.add($event)">
+                <i class="material-icons">&#xE145;</i>
+            </a>
+        </div>
+
+    </div>
+
+</div>

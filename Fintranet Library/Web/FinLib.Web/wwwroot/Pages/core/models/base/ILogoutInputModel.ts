@@ -1,0 +1,3 @@
+﻿interface ILogoutInputModel {
+    LogoutId: string;
+}

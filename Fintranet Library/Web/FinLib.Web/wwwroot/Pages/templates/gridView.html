@@ -1,0 +1,170 @@
+﻿<div id="{{gridViewConfig.elementId}}" class="grid-view" ng-show="tableData.columns.length">
+    <div class="grid-view-overlay" ng-show="isTableLoading"></div>
+    <div class="uk-overflow-container" ng-show="tableData.rows">
+        <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair">
+            <thead>
+                <tr>
+                    <th ng-if="gridViewConfig.showCheckbox">
+                        <input type="checkbox" class="check_all"
+                               icheck ng-model="selectAll"
+                               ng-change="selectAllChanged($event)" />
+                    </th>
+                    <th class="index-column">#</th>
+
+                    <!--SingleView-->
+                    <th class="" ng-if="gridViewConfig.singleViewLinkVisible"></th>
+
+                    <th class="tablesorter-header"
+                        ng-repeat="col in tableData.columns"
+                        ng-click="sortBy($event, col.field)"
+                        ng-class="{ 'tablesorter-headerAsc': request.pageOrder.indexOf(col.field) >= 0 && request.pageOrder.indexOf('desc') >= 0, 'tablesorter-headerDesc': request.pageOrder.indexOf(col.field) >= 0 && request.pageOrder.indexOf('asc') >= 0 }">
+                        <div class="tablesorter-header-inner">{{col.title}}</div>
+                    </th>
+
+                    <!--class="lastupdate-column tablesorter-header-inner"-->
+                    <th ng-if="gridViewConfig.lastUpdateTimeVisible"
+                        class="tablesorter-header"
+                        ng-class="{ 'tablesorter-headerAsc': request.pageOrder.indexOf('updateDate') >= 0 && request.pageOrder.indexOf('desc') >= 0, 'tablesorter-headerDesc': request.pageOrder.indexOf('updateDate') >= 0 && request.pageOrder.indexOf('asc') >= 0 }"
+                        ng-click="sortBy($event, 'updateDate')">
+                        <div class="tablesorter-header-inner">
+                            Last modified
+                        </div>
+                    </th>
+
+                    <!--Actions (edit/delete, customActions) -->
+                    <th ng-if="gridViewConfig.editLinkVisible || gridViewConfig.deleteLinkVisible || gridViewConfig.customActions">
+                        Operations
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in tableData.rows"
+                    ng-style="{ 'background-color': row.isSelected ? 'rgb(75 102 232 / 12%)' : ''}">
+                    <td class="uk-text-center uk-table-middle small_col" ng-if="gridViewConfig.showCheckbox">
+                        <div ng-show="row.isLoading">
+                            <md-preloader stroke-width="6" width="36"></md-preloader>
+                        </div>
+                        <div ng-hide="row.isLoading">
+                            <input type="checkbox" class="check_row"
+                                   icheck table-check-row ng-model="row.isSelected" />
+                        </div>
+                    </td>
+                    <td>
+                        {{(request.pageIndex * request.pageSize) + ($index + 1)}}
+                    </td>
+
+                    <!--SingleView-->
+                    <td ng-if="gridViewConfig.singleViewLinkVisible">
+                        <button class="md-btn md-btn-flat md-btn-small" type="button" title="View details"
+                                ng-click="self.showSingleViewDialog($event, row)"
+                                ng-show="gridViewConfig.singleViewLinkVisible">
+                            <i class="material-icons md-24">pageview</i>
+                        </button>
+                    </td>
+
+
+                    <!--Main Columns-->
+                    <td ng-repeat="col in tableData.columns">
+                        <span ng-bind-html="row[col.field] | gridFilter: col.filter:row"></span>
+                    </td>
+
+                    <td ng-if="gridViewConfig.lastUpdateTimeVisible" am-time-ago="row.updateDate"></td>
+
+                    <!--Actions (edit/delete, customActions) -->
+                    <td ng-if="gridViewConfig.editLinkVisible || gridViewConfig.deleteLinkVisible || gridViewConfig.customActions">
+                        <div class="uk-button-dropdown" data-uk-dropdown="{pos:'left-center', delay: 1000, mode:'click', preventflip:'true'}" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons md-icon" title="Operations"></i>
+                            <div class="uk-dropdown " aria-hidden="true" tabindex="">
+                                <ul class="uk-nav uk-nav-dropdown">
+
+                                    <!--Common Actions-->
+                                    <li ng-if="gridViewConfig.editLinkVisible" title="Edit">
+                                        <a ng-click="self.showEditDialog($event, row)">
+                                            <span class="md-color-green-600">
+                                                <i class="material-icons md-24 md-color-green-500">edit</i>
+                                                Edit
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li ng-if="gridViewConfig.deleteLinkVisible" title="Delete">
+                                        <a ng-click="self.delete($event, row)">
+                                            <span class="md-color-red-600">
+                                                <i class="material-icons md-24 md-color-red-500">delete</i>
+                                                Delete
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <!-- custom actions -->
+                                    <li ng-repeat="customAction in gridViewConfig.customActions"
+                                        title="{{customAction.tooltip}}"
+                                        class="{{customAction.color}}">
+                                        <a ng-click="customAction.click($event, row)">
+                                            <span class="uk-text-truncate {{customAction.color}}">
+                                                <i class="material-icons md-24 {{customAction.color}}">{{customAction.icon}}</i>
+                                                {{customAction.title}}
+                                            </span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        <ul class="uk-pagination uk-margin-top">
+            <li ng-class="{ 'uk-disabled': firstPageDisable }" class="first">
+                <a href="#"
+                   title="Previous page"
+                   ng-if="!firstPageDisable"
+                   ng-click="goto($event, 0)"><i class="uk-icon-angle-double-left"></i></a>
+                <span ng-if="firstPageDisable"><i class="uk-icon-angle-double-left"></i></span>
+            </li>
+            <li class="prev">
+                <a href="#"
+                   title="First page"
+                   ng-if="!firstPageDisable"
+                   ng-click="goto($event, (request.pageIndex - 1))"><i class="uk-icon-angle-left"></i></a>
+                <span ng-if="firstPageDisable"><i class="uk-icon-angle-left"></i></span>
+            </li>
+            <li ng-repeat="item in pages" ng-class="{ 'uk-active': (request.pageIndex == (item - 1)) }">
+                <a href="#"
+                   ng-click="goto($event, (item - 1))">{{item}}</a>
+            </li>
+            <li class="next">
+                <a href="#"
+                   title="Next page"
+                   ng-if="!lastPageDisable"
+                   ng-click="goto($event, (request.pageIndex + 1))"><i class="uk-icon-angle-right"></i></a>
+                <span ng-if="lastPageDisable"><i class="uk-icon-angle-right"></i></span>
+            </li>
+            <li ng-class="{ 'uk-disabled': lastPageDisable }" class="last">
+                <a href="#"
+                   title="Last page"
+                   ng-if="!lastPageDisable"
+                   ng-click="goto($event, (pageCount - 1))"><i class="uk-icon-angle-double-right"></i></a>
+                <span ng-if="lastPageDisable"><i class="uk-icon-angle-double-right"></i></span>
+            </li>
+            <li>
+                <span class="md-color-grey-600">
+                    count : {{tableData.count}}
+                </span>
+            </li>
+            <li class="page-size">
+                <input type="text" selectize
+                       class="page-sizes"
+                       config="pageSizeConfig"
+                       options="pageSizes"
+                       ng-model="selectedPageSize" />
+            </li>
+        </ul>
+    </div>
+</div>

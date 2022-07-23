@@ -1,0 +1,47 @@
+﻿<div id="page_content">
+
+    <div id="page_heading">
+        <div class="heading_actions">
+            <a href="javascript: void(0)" data-uk-tooltip="{pos:'bottom'}"
+               ng-click="self.toggleFilter()"
+               title="Search"><i ng-class="{ 'md-color-blue-500': isFilterActive }" class="md-icon material-icons">&#xE8B6;</i></a>
+        </div>
+        <h1>{{state_title}}</h1>
+
+        <div class="uk-form-row" ng-show="isFilterActive">
+            <div class="uk-grid uk-margin-top">
+
+                <div class="uk-width-small-2-10 uk-margin-small-top">
+                    <input type="text"
+                           config="booksForSearchFilterConfig"
+                           options="booksForSearchFilter"
+                           ng-model="request.searchFilterModel.bookId.value"
+                           selectize />
+                </div>
+
+                <div class="uk-width-small-2-10">
+                    <button type="button" class="md-btn md-btn-primary uk-margin-top uk-float-left"
+                            ng-click="self.filterTable($event)">
+                        Search
+                    </button>
+                    <button type="button" class="md-btn md-btn-danger uk-margin-top"
+                            ng-click="self.clearSearchFilters()">
+                        Clear filters
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="page_content_inner">
+        <div class="md-card">
+            <div class="md-card-content">
+                <grid-view></grid-view>
+            </div>
+        </div>
+
+    </div>
+
+</div>
