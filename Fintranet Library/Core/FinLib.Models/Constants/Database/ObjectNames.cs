@@ -2,6 +2,8 @@
 {
     public static class ObjectNames
     {
-        public const string TableName_Logging= "[dbo].[GeneralLogs]";
+        public const string Logging_SchemaName= "dbo";
+        public const string Logging_TableName = "GeneralLogs";
+        public const string Logging_FullTableName = Logging_SchemaName + "." + Logging_TableName;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FinLib.Models.Constants.Database;
+using Microsoft.Data.SqlClient;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -65,12 +66,120 @@ namespace FinLib.Providers.Logging
 
         public static void AddDatabaseTarget(this LoggingConfiguration configuration, string targetName, LogLevel minLevel, LogLevel maxLevel
             , string connectionString
+            , bool createDatabseIfNotExist = true
             , DatabaseTarget databaseTarget = null)
         {
             databaseTarget ??= getDatabaseTarget(targetName, connectionString);
             configuration.AddRule(minLevel, maxLevel, databaseTarget);
 
             LogManager.Configuration = LogManager.Configuration.Reload();
+
+            // 
+            if (createDatabseIfNotExist)
+                doCreateDatabseIfNotExist(connectionString);
+        }
+
+        private static void doCreateDatabseIfNotExist(string connectionString)
+        {
+            InstallationContext installationContext = new InstallationContext();
+
+            StringBuilder sb = new StringBuilder();
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.ConnectionString = connectionString;
+            string theDatabaseName = builder.InitialCatalog;
+
+            NLog.Targets.DatabaseTarget targetDB = new NLog.Targets.DatabaseTarget();
+
+            targetDB.Name = "db";
+            targetDB.ConnectionString = connectionString;
+
+            NLog.Targets.DatabaseParameterInfo paramDB;
+
+            paramDB = new NLog.Targets.DatabaseParameterInfo();
+            paramDB.Name = string.Format("@Message");
+            paramDB.Layout = string.Format("${{message}}");
+
+            SqlConnectionStringBuilder theConnectionStringBuilder = new SqlConnectionStringBuilder();
+            theConnectionStringBuilder.ConnectionString = connectionString;
+            theConnectionStringBuilder.InitialCatalog = "master";
+
+            // we have to connect to master in order to do the install because the DB may not exist
+            targetDB.InstallConnectionString = theConnectionStringBuilder.ConnectionString;
+
+            sb.AppendLine(string.Format("IF NOT EXISTS (SELECT name FROM master.sys.databases WHERE name = N'{0}')", theDatabaseName));
+            sb.AppendLine(string.Format("CREATE DATABASE {0}", theDatabaseName));
+
+            var createDBCommand = new DatabaseCommandInfo();
+            createDBCommand.Text = sb.ToString();
+            createDBCommand.CommandType = System.Data.CommandType.Text;
+            targetDB.InstallDdlCommands.Add(createDBCommand);
+
+            // create the database if it does not exist
+            targetDB.Install(installationContext);
+
+
+            targetDB.InstallDdlCommands.Clear();
+            sb.Clear();
+            sb.AppendLine($"IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{ObjectNames.Logging_SchemaName}' AND  TABLE_NAME = '{ObjectNames.Logging_TableName}')");
+            sb.AppendLine("RETURN");
+            sb.AppendLine("");
+            sb.Append(@$"
+SET ANSI_NULLS ON
+
+SET QUOTED_IDENTIFIER ON
+
+CREATE TABLE {ObjectNames.Logging_FullTableName}(
+	[Id] [uniqueidentifier] NOT NULL,
+	[CreateDate] [datetime2](7) NOT NULL,
+	[Level] [nvarchar](max) NULL,
+	[Category] [int] NULL,
+	[EventId] [int] NULL,
+	[EventType] [int] NULL,
+	[Message] [nvarchar](max) NULL,
+	[CustomData] [nvarchar](max) NULL,
+	[Logger] [nvarchar](max) NULL,
+	[RemoteIpAddress] [nvarchar](max) NULL,
+	[MachineName] [nvarchar](50) NULL,
+	[UserId] [int] NULL,
+	[AuthenticatedUserName] [nvarchar](50) NULL,
+	[Request] [nvarchar](max) NULL,
+	[HttpMethod] [nvarchar](50) NULL,
+	[QueryString] [nvarchar](2048) NULL,
+	[HttpReferrer] [nvarchar](max) NULL,
+	[UserAgent] [nvarchar](500) NULL,
+	[StatusCode] [nvarchar](20) NULL,
+	[ContentType] [nvarchar](max) NULL,
+	[Exception] [nvarchar](max) NULL,
+	[CallSite] [nvarchar](max) NULL,
+	[ContextTraceId] [nvarchar](max) NULL,
+	[IdpTraceId] [nvarchar](50) NULL,
+	[AllRequestHeaders] [nvarchar](max) NULL,
+	[EntityName] [varchar](100) NULL,
+	[EntityTitle] [nvarchar](100) NULL,
+	[OldValue] [nvarchar](max) NULL,
+	[NewValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_GeneralLogs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+ALTER TABLE [dbo].[GeneralLogs] ADD  CONSTRAINT [DF_GeneralLogs_Id]  DEFAULT (newid()) FOR [Id]
+
+ALTER TABLE [dbo].[GeneralLogs] ADD  CONSTRAINT [DF__GeneralLo__Creat__4E88ABD4]  DEFAULT (getdate()) FOR [CreateDate]
+
+");
+
+            DatabaseCommandInfo createTableCommand = new DatabaseCommandInfo();
+            createTableCommand.Text = sb.ToString();
+            createTableCommand.CommandType = System.Data.CommandType.Text;
+            targetDB.InstallDdlCommands.Add(createTableCommand);
+
+            // we can now connect to the target DB
+            targetDB.InstallConnectionString = connectionString;
+
+            // create the table if it does not exist
+            targetDB.Install(installationContext);
         }
 
         private static DatabaseTarget getDatabaseTarget(string targetName, string connectionString)
@@ -83,7 +192,7 @@ namespace FinLib.Providers.Logging
                 CommandType = System.Data.CommandType.Text,
 
                 CommandText =
-$@"INSERT INTO {ObjectNames.TableName_Logging}
+$@"INSERT INTO {ObjectNames.Logging_FullTableName}
 (
       Level
     , Category

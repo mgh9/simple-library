@@ -28,6 +28,12 @@ namespace FinLib.Web.Helpers
 
             ensureDefaultUsersAndRolesAsync(app, globalSettingsProvider.Settings, commonServicesProvider).Wait();
             ensureMenusAsync(app, globalSettingsProvider.Settings, commonServicesProvider).Wait();
+            ensureAuditingDatabaseCreatedAsync(app, globalSettingsProvider.Settings, commonServicesProvider).Wait();
+        }
+
+        private static async Task ensureAuditingDatabaseCreatedAsync(IApplicationBuilder app, GlobalSettings settings, ICommonServicesProvider<GlobalSettings> commonServicesProvider)
+        {
+            //commonServicesProvider.DbContext.Database.
         }
 
         private static async Task<bool> ensureMenusAsync(IApplicationBuilder app, GlobalSettings globalSettings, ICommonServicesProvider<GlobalSettings> commonServicesProvider)
