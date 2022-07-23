@@ -1,7 +1,6 @@
 ﻿using FinLib.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinLib.DomainClasses.SEC
@@ -10,7 +9,6 @@ namespace FinLib.DomainClasses.SEC
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FullName { get; set; } 
         public Gender? Gender { get; set; }
         public DateTime? BirthDate { get; set; }
         

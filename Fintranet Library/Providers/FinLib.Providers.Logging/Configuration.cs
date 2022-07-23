@@ -4,9 +4,6 @@ using FinLib.Providers.Logging.CustomLayoutRenderers;
 
 namespace FinLib.Providers.Logging
 {
-    /// <summary>
-    /// کانفیگ سراسری لاگ در کل برنامه
-    /// </summary>
     public static class Configuration
     {
         static Configuration()
@@ -33,8 +30,7 @@ namespace FinLib.Providers.Logging
             // register my LayoutRenderer
             registerCustomLayoutRenderers();
 
-            // عملیات اطلاعاتی و خطاها در دیتابیس
-            // TODO: use ElasticSearch
+            // TODO: use ElasticSearch for browsing
 
             // apply
             LogManager.Configuration = theConfig;

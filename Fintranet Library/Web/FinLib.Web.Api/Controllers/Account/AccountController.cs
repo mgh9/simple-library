@@ -8,6 +8,8 @@ using FinLib.Web.Api.Helpers;
 using FinLib.Web.Api.SEC;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Account
 {
@@ -42,7 +44,7 @@ namespace FinLib.Web.Api.Account
             }
             else
             {
-                result.Message = "لطفا مجددا وارد سامانه شوید";
+                result.Message = "Please signin again";
                 result.Success = false;
             }
 
@@ -76,12 +78,16 @@ namespace FinLib.Web.Api.Account
         {
             var res = HttpContextAccessor.HttpContext.Response;
 
-            // get his UserRoles
-            var userRoles = new UserRoleService(CommonServicesProvider).GetByUserId(loggedInUserId);
+            // get his UserRoles of loggedInUser
+            var userRoles = new UserRoleService(CommonServicesProvider)
+                            .GetByUserId(loggedInUserId);
 
-            // اگه توی محدوده نقش های مجاز (نقشهایی ک این کاربر منتصب شده بهش) هست، مقدار جدید رو
-            // توی کوکی ست کن
-            if (userRoles.Any(item => item.Id == newUserRoleId))
+            bool isUserRoleIdVAlidToSetAsDefault()
+            {
+                return userRoles.Any(item => item.Id == newUserRoleId);
+            }
+
+            if (isUserRoleIdVAlidToSetAsDefault())
             {
                 var activeUserRoleCookieOptions = UserManagerHelper.GetCookieOptionsForActiveUserRole();
 
@@ -96,11 +102,11 @@ namespace FinLib.Web.Api.Account
             }
             else
             {
-                //// yani roleID yi k mikhad set she, tuye mahdudeye mojaze khodesh nist. 
+                // the new UserRoleID is invalid and cannot be set as a defaultUserRoleId of current user
                 //_appLogger.AuditWarning(Models.Enums.AuditHelpers.Error.Category
                 //                                , Models.Enums.AuditHelpers.Error.AccessDenied
                 //                                , Models.Enums.EventType.Failure
-                //                                , "شناسه نقش جهت تنظیم، غیرمجاز می باشد"
+                //                                , "Invalid userRoleId to set as a default"
                 //                                , customData: newUserRoleId.ToString());
             }
         }

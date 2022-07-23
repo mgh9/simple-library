@@ -63,7 +63,7 @@ altairApp
                     }]
             },
             data: {
-                pageTitle: 'ورود به سامانه'
+                pageTitle: 'Login'
             },
             ncyBreadcrumb: {
                 label: 'Home'
@@ -88,7 +88,7 @@ altairApp
                     }]
             },
             data: {
-                pageTitle: 'داشبورد'
+                pageTitle: 'Dashboard'
             },
             ncyBreadcrumb: {
                 label: 'Home'

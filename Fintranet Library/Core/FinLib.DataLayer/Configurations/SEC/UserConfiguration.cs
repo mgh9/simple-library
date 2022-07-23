@@ -11,7 +11,6 @@ namespace FinLib.DataLayer.Configurations.SEC
             base.AdditionalConfigure(builder);
 
             builder.ToTable("Users", "SEC");
-            builder.Ignore(x => x.FullName);
         }
     }
 }

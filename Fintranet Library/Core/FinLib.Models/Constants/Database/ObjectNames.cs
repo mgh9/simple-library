@@ -2,6 +2,6 @@
 {
     public static class ObjectNames
     {
-        public const string TableName_Logging= "dbo.Logs";
+        public const string TableName_Logging= "[dbo].[GeneralLogs]";
     }
 }

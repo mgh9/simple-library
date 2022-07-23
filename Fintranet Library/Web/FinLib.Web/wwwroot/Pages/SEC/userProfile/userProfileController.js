@@ -34,7 +34,7 @@ var FinLib;
                 UserProfileController.prototype.init = function () {
                     var self = this, $scope = self.$scope, $root = self.$root;
                     $scope.gendersConfig = angular.extend({}, $root.selectizeConfig, {
-                        placeholder: 'جنسیت',
+                        placeholder: 'Gender',
                     });
                     $scope.genders = GenderTitleValues.slice(1, 3);
                     self.userProfileService.get().then(function (response) {

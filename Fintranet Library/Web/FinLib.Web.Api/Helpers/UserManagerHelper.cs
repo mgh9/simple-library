@@ -5,6 +5,11 @@ using FinLib.DataLayer.Context;
 using FinLib.Models.Dtos.SEC;
 using FinLib.Services.SEC;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Helpers
 {
@@ -93,7 +98,7 @@ namespace FinLib.Web.Api.Helpers
             }
             catch (Exception ex)
             {
-                throw new Common.Exceptions.Infra.FatalException("خطا در تعیین شناسه کاربری پیش فرض کاربر رخ داده است", ex);
+                throw new Common.Exceptions.Infra.FatalException("There is no default role for this user account", ex);
             }
         }
 
@@ -103,7 +108,7 @@ namespace FinLib.Web.Api.Helpers
 
             if (hisUserRoles.Count == 0)
             {
-                throw new InvalidUserRoleException(userId, "برای کاربری شما، نقش منتصب تعریف نشده است!");
+                throw new InvalidUserRoleException(userId, "there's no roles for this User account!");
             }
 
             var properedUserRoles = getUserRolesPrepared(dbContext, hisUserRoles);

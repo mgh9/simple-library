@@ -78,7 +78,7 @@ namespace FinLib.Providers.Identity
         }
 
         /// <summary>
-        /// فیلد زمان بروزرسانی اطلاعات کاربر رو بروز میکنه
+        /// 
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>

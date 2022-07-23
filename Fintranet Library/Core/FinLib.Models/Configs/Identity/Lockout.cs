@@ -11,9 +11,6 @@ namespace FinLib.Models.Configs.Identity
         public bool IsLockoutAfterMaxFailedAccessAttemptsEnabled { get; set; }
         public int MaxFailedAccessAttempts { get; set; }
 
-        /// <summary>
-        /// مدت زمان قفل موندن کاربر به دقیقه
-        /// </summary>
         public int LockoutTimeInMinutes { get; set; }
     }
 }

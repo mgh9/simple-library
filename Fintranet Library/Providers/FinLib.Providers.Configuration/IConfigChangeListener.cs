@@ -3,7 +3,7 @@
     public interface IConfigChangeListener
     {
         /// <summary>
-        /// زمانی که کانفیگی تغییر کنه، این متد فایر میشه
+        /// Fire when the appsettings changed
         /// </summary>
         /// <param name="category">the category name of the changed config</param>
         /// <param name="key">the key name of the changed config</param>

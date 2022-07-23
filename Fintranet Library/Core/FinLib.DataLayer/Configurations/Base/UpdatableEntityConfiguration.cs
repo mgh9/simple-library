@@ -12,8 +12,8 @@ namespace FinLib.DataLayer.Configurations.Base
             base.Configure(builder);
 
             // descriptions
-            builder.Property(x => x.UpdateDate).HasComment("زمان ویرایش");
-            builder.Property(x => x.UpdatedByUserRoleId).HasComment("شناسه ی کاربر ویرایش کننده");
+            builder.Property(x => x.UpdateDate).HasComment("Modified time");
+            builder.Property(x => x.UpdatedByUserRoleId).HasComment("Modifier userRole Id");
         }
     }
 }

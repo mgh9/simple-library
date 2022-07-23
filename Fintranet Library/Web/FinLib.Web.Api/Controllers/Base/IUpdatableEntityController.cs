@@ -3,6 +3,7 @@ using FinLib.Models.Base.Dto;
 using FinLib.Models.Base.SearchFilters;
 using FinLib.Models.Base.View;
 using FinLib.Services.Base;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Base
 {

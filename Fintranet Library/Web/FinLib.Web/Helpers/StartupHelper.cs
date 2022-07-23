@@ -39,7 +39,7 @@ namespace FinLib.Web.Helpers
     internal static class StartupHelper
     {
         /// <summary>
-        /// تزریق تنظیمات  و کانفیگ های سراسری
+        /// injecting appSettings provider
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -56,7 +56,7 @@ namespace FinLib.Web.Helpers
         }
 
         /// <summary>
-        /// تزریق وابستگی های عمومی
+        /// Injecting common dependancies
         /// </summary>
         /// <param name="services"></param>
         internal static void AddCommonDependencies(this IServiceCollection services)
@@ -65,7 +65,7 @@ namespace FinLib.Web.Helpers
         }
 
         /// <summary>
-        /// تنظیم سیاست های کوکی
+        /// injecting cookie policies
         /// </summary>
         /// <param name="services"></param>
         internal static void AddCookiePolicies(this IServiceCollection services, IWebHostEnvironment environment)
@@ -166,7 +166,7 @@ namespace FinLib.Web.Helpers
         }
 
         /// <summary>
-        /// Register EntityFrameworkCore (DbContexts : Main db, Auditing, ServiceProvider)
+        /// Register EntityFrameworkCore (DbContexts : Main, Auditing)
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -219,11 +219,8 @@ namespace FinLib.Web.Helpers
         /// <param name="configuration"></param>
         internal static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            //var theGlobalSettings = getGlobalSettings(configuration);
-
             var appDbContext = services.BuildServiceProvider().GetRequiredService<IUnitOfWork>();
-
-            //var passwordPolicyConfigs = appDbContext.Set<Config>().Where(x => x.Category == PasswordPolicy.CategoryKey).ToList();
+            var theGlobalSettings = getGlobalSettings(configuration);
             //var lockoutPolicyConfigs = appDbContext.Set<Config>().Where(x => x.Category == Lockout.CategoryKey).ToList();
 
             services.AddIdentity<User, Role>(config =>
@@ -232,15 +229,15 @@ namespace FinLib.Web.Helpers
 
                 // TODO: add Identity Policies from the config (database or appsettings)
 
-                //config.Password.RequireDigit = ConfigService.GetConfigValue<bool>(passwordPolicyConfigs.Single(x => x.Key == nameof(config.Password.RequireDigit)));
-                //config.Password.RequiredLength = ConfigService.GetConfigValue<int>(passwordPolicyConfigs.Single(x => x.Key == nameof(config.Password.RequiredLength)));
-                //config.Password.RequireNonAlphanumeric = ConfigService.GetConfigValue<bool>(passwordPolicyConfigs.Single(x => x.Key == nameof(config.Password.RequireNonAlphanumeric)));
-                //config.Password.RequireUppercase = ConfigService.GetConfigValue<bool>(passwordPolicyConfigs.Single(x => x.Key == nameof(config.Password.RequireUppercase)));
-                //config.Password.RequireLowercase = ConfigService.GetConfigValue<bool>(passwordPolicyConfigs.Single(x => x.Key == nameof(config.Password.RequireLowercase)));
+                config.Password.RequireDigit = theGlobalSettings.Identity.PasswordPolicy.RequireDigit;
+                config.Password.RequiredLength = theGlobalSettings.Identity.PasswordPolicy.RequiredLength;
+                config.Password.RequireNonAlphanumeric = theGlobalSettings.Identity.PasswordPolicy.RequireNonAlphanumeric;
+                config.Password.RequireUppercase = theGlobalSettings.Identity.PasswordPolicy.RequireUppercase;
+                config.Password.RequireLowercase = theGlobalSettings.Identity.PasswordPolicy.RequireLowercase;
 
-                //config.Lockout.AllowedForNewUsers = ConfigService.GetConfigValue<bool>(lockoutPolicyConfigs.Single(x => x.Key == nameof(config.Lockout.AllowedForNewUsers)));
-                //config.Lockout.MaxFailedAccessAttempts = ConfigService.GetConfigValue<int>(lockoutPolicyConfigs.Single(x => x.Key == nameof(config.Lockout.MaxFailedAccessAttempts)));
-                //config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(ConfigService.GetConfigValue<int>(lockoutPolicyConfigs.Single(x => x.Key == nameof(Lockout.LockoutTimeInMinutes))));
+                config.Lockout.AllowedForNewUsers = theGlobalSettings.Identity.Lockout.AllowedForNewUsers;
+                config.Lockout.MaxFailedAccessAttempts = theGlobalSettings.Identity.Lockout.MaxFailedAccessAttempts;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(theGlobalSettings.Identity.Lockout.LockoutTimeInMinutes);
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 //.AddErrorDescriber<AppErrorDescriber>()
@@ -257,19 +254,11 @@ namespace FinLib.Web.Helpers
         }
 
         /// <summary>
-        /// تزریق سرویس های عمومی که در کل برنامه استفاده میشه
+        /// Injecting shared/common services (contains LoggedInUser info and ...) and all the business services
         /// </summary>
         /// <param name="services"></param>
         internal static void AddCommonServices(this IServiceCollection services)
         {
-            // Loging + Auditing service (wrapper for IdentityServic built-in eventService and my application logger)
-            //services.AddScoped<IAppLogger, AuditingProvider>();
-
-            // my custom event sink (for identityServer)
-            //services.AddScoped<IEventSink, AppEventsSink>();
-            //services.AddScoped<IMyEventService, MyEventService>();
-
-            // تامین کننده سرویس های بیس برای کنترلرها (در لایه کنترلر) + سرویس های بیزینس (در لایه سرویس)
             services.AddScoped<ICommonServicesProvider<FinLib.Models.Configs.GlobalSettings>>(factoryProvider =>
             {
                 var serviceProvider = factoryProvider.GetRequiredService<IServiceProvider>();
@@ -311,6 +300,7 @@ namespace FinLib.Web.Helpers
                 }
             });
 
+            // inject all the business services
             services.RegisterAllTypesOf<BaseService>(new[] { typeof(BaseService).Assembly });
         }
 
@@ -321,10 +311,6 @@ namespace FinLib.Web.Helpers
             // TODO: add Redis here
         }
 
-        internal static void AddProviders(this IServiceCollection services, IConfiguration configuration)
-        {
-            var theGlobalSettings = getGlobalSettings(configuration);
-        }
 
         #region Security Considerations
 
@@ -485,16 +471,6 @@ namespace FinLib.Web.Helpers
             });
         }
 
-        /// <summary>
-        /// تنظیم و تزریق تنظیمات مربوط به رمزنگاری اطلاعات در برنامه
-        /// در برخی نقاط برنامه که نیاز است، یک مقدار، رمزنگاری شود، از
-        /// بستر DataProtection
-        /// تعبیه شده در
-        /// ASP.NET Core
-        /// استفاده می کنیم
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="environment"></param>
         internal static void AddDataProtection(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration configuration)
         {
             IAppLogger logger;

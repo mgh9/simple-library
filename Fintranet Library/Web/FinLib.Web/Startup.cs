@@ -68,8 +68,6 @@ namespace FinLib.Web
 
             services.AddCompression();
 
-            services.AddProviders(_configuration);
-
             services.AddDistributedCache(_configuration);
         }
 

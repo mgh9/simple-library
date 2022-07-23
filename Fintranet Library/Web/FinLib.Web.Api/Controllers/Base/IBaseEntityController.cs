@@ -4,6 +4,7 @@ using FinLib.Models.Base.SearchFilters;
 using FinLib.Models.Base.View;
 using FinLib.Models.Dtos;
 using FinLib.Services.Base;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Base
 {

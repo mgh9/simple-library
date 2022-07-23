@@ -109,7 +109,7 @@ namespace FinLib.Mappings
                     }
                     else
                     {
-                        throw new InvalidSortException("امکان مرتب سازی بر اساس این ستون وجود ندارد! : " + strProp);
+                        throw new InvalidSortException("Cannot sort by this column! : " + strProp);
                     }
                 }
 

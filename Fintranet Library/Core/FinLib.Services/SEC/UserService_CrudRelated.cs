@@ -7,7 +7,6 @@ using FinLib.DomainClasses.SEC;
 using FinLib.Mappings;
 using FinLib.Models.Constants.Database;
 using FinLib.Models.Dtos.SEC;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
@@ -16,15 +15,6 @@ namespace FinLib.Services.SEC
 {
     public partial class UserService
     {
-        //public async Task<IdentityResult> UpdateLastLogggedInTimeAsync(int userId)
-        //{
-        //    var theUserEntity = await _appUserManager.FindByIdAsync(userId.ToString());
-        //    theUserEntity.LastLoggedInTime = DateTime.Now;
-        //    var result = await _appUserManager.UpdateAsync(theUserEntity);
-
-        //    return result;
-        //}
-
         public override async Task DeleteAsync(int id)
         {
             User theUserEntity = null;

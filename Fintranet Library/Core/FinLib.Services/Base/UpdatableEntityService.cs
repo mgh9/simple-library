@@ -92,7 +92,7 @@ namespace FinLib.Services.Base
                     {
                         case null:
                         case string itsValueAsString when itsValueAsString.IsEmpty():
-                            throw new BusinessValidationException($"مقدار '{itsComment}' نمیتواند خالی باشد");
+                            throw new BusinessValidationException($"the value of '{itsComment}' cannot be empty");
                     }
                 }
 
@@ -101,7 +101,7 @@ namespace FinLib.Services.Base
 
                 if (maxLen is not null && itsValueOnModel.ToString().Length > maxLen)
                 {
-                    throw new BusinessValidationException($"مقدار '{itsComment}' نباید بیشتر از {maxLen} حرف باشد");
+                    throw new BusinessValidationException($"the length of the value of '{itsComment}' cannot exceeded of {maxLen}");
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace FinLib.Services.Base
                         , _entityName, _entityTitle, entitiesToRemoveCloned, null, "some data used in the system and cannot be deleted"
                                                                     , sqlException);
 
-                    throw new GeneralBusinessLogicException("بخشی از رکوردهای اطلاعاتی مورد حذف، در بخش های دیگری از سیستم استفاده شده و قابل حذف نمی باشد");
+                    throw new GeneralBusinessLogicException("This entity used in the system and cannot be deleted");
                 }
                 else
                 {

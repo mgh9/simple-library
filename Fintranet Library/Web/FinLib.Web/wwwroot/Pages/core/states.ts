@@ -71,7 +71,7 @@
                         }]
                     },
                     data: {
-                        pageTitle: 'ورود به سامانه'
+                        pageTitle: 'Login'
                     },
                     ncyBreadcrumb: {
                         label: 'Home'
@@ -97,7 +97,7 @@
                         }]
                     },
                     data: {
-                        pageTitle: 'داشبورد'
+                        pageTitle: 'Dashboard'
                     },
                     ncyBreadcrumb: {
                         label: 'Home'

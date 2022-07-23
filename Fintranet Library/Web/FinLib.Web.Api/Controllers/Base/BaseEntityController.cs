@@ -7,11 +7,13 @@ using FinLib.Models.Base.SearchFilters;
 using FinLib.Models.Base.View;
 using FinLib.Models.Configs;
 using FinLib.Models.Dtos;
-using FinLib.Models.Enums;
 using FinLib.Providers.Database;
 using FinLib.Services.Base;
 using FinLib.Web.Shared.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Base
 {
@@ -47,21 +49,16 @@ namespace FinLib.Web.Api.Base
         }
 
         /// <summary>
-        /// بیزینس-سرویس موجودیت جاری در این کنترلر
+        /// the business service of this Entity (TEntity)
         /// </summary>
         protected TEntityService Service { get; private set; }
 
         /// <summary>
-        /// دریافت لیست موجودیت ها با پارامترهای جستجو و صفحه بندی
+        /// Get the entities (TEntity) list as a view (TView), filtered by TSearchFilter parameters
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [
-            // بخاطر پارامتر ورودی که کامپلکس هست، یه راه همینه که بصورت پٌست دریافت کنیم و نه گِت
-            HttpPost,
-            // چون ماهیت اصلی این عملیات، گِت هست، پس اعتبارسنجی توکن آنتی فورجری رو ایگنور میکنیم براش
-            IgnoreAntiforgeryToken
-        ]
+        [HttpPost, IgnoreAntiforgeryToken]
         [MyAuthorize()]
         public virtual async Task<JsonResult<TableData<TView>>> GetAsync([FromBody] GetRequestDto<TSearchFilter> request)
         {
@@ -78,22 +75,17 @@ namespace FinLib.Web.Api.Base
             return result;
         }
 
-        /// <summary>
-        /// دریافت لیست موجودیت بصورت کد-مقدار و بر اساس 
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
         [HttpPost, IgnoreAntiforgeryToken]
         [MyAuthorize()]
         public virtual async Task<JsonResult<List<TitleValue<int>>>> GetTitleValueListAsync([FromQuery] SearchAutocompleteDto model)
         {
             model.ThrowIfNull();
 
-            var result = new JsonResult<List<TitleValue<int>>>();
-
-            result.Data = await Service.GetTitleValueListAsync(text: model.Text);
-
-            result.Success = true;
+            var result = new JsonResult<List<TitleValue<int>>>
+            {
+                Data = await Service.GetTitleValueListAsync(text: model.Text),
+                Success = true
+            };
             return result;
         }
 

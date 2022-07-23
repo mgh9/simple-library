@@ -2,9 +2,6 @@
 
 namespace FinLib.Models.Configs
 {
-    /// <summary>
-    /// تنظیمات عمومی در برنامه
-    /// </summary>
     [IgnoreTypewriterMapping]
     public class GlobalSettings
     {

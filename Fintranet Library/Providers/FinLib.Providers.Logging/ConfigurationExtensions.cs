@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using FinLib.Models.Constants.Database;
+using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
@@ -82,7 +83,7 @@ namespace FinLib.Providers.Logging
                 CommandType = System.Data.CommandType.Text,
 
                 CommandText =
-@"INSERT INTO dbo.GeneralLogs
+$@"INSERT INTO {ObjectNames.TableName_Logging}
 (
       Level
     , Category
@@ -152,7 +153,7 @@ VALUES
     , NullIf(@ContextTraceId, '')
     , NullIf(@IdpTraceId, '')
 )"
-            }; // فقط اگه اکسپشن رخ بده، بعضی از پارامترها رو (مثل کوئری استرینگ یا پارامترها، ...) که طولانی تر هستند و سنگین میکنن دیتابیس رو، ذخیره میکنیم
+            }; 
 
             dbTarget.Parameters.Add(new DatabaseParameterInfo("@Level", new SimpleLayout("${level}")));
             dbTarget.Parameters.Add(new DatabaseParameterInfo("@Category", new SimpleLayout("${event-properties:item=category}")));
@@ -191,12 +192,12 @@ VALUES
         }
 
         /// <summary>
-        /// افزودن مخزن لاگ فایل
+        /// 
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="minLevel"></param>
         /// <param name="maxLevel"></param>
-        /// <param name="fileTarget">اگه کانفیگ مد نظر خودتون هست، اینجا تزریقش کنین</param>
+        /// <param name="fileTarget"></param>
         public static void AddFileTarget(this LoggingConfiguration configuration
             , string targetName
             , LogLevel minLevel, LogLevel maxLevel
@@ -271,7 +272,7 @@ VALUES
         }
 
         /// <summary>
-        /// لاگ در کنسول بصورت رنگی
+        /// 
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="minLevel"></param>

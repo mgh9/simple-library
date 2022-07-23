@@ -27,7 +27,7 @@
                 $root = self.$root;
 
             $scope.gendersConfig = angular.extend({}, $root.selectizeConfig, {
-                placeholder: 'جنسیت',
+                placeholder: 'Gender',
             });
             $scope.genders = GenderTitleValues.slice(1, 3);
 
@@ -39,7 +39,6 @@
                     $scope.userProfile = result.data;
                     $scope.userProfileConfig = result.dataConfig;
 
-                    // بعد از اینکه قوانین رو دریافت کرد، دیالوگ تغییر رمز عبور رو اینیت کن
                     self.initChangePasswordDialog();
 
                     $scope.userProfileForEdit = {

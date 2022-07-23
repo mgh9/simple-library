@@ -38,7 +38,7 @@ namespace FinLib.Web
                 _logger.Fatal(FinLib.Models.Enums.EventCategory.Application
                     , FinLib.Models.Enums.EventId.Processing
                     , FinLib.Models.Enums.EventType.Failure
-                                , "خطای حاد در روند اجرای برنامه رخ داده است"
+                                , "Fatal error in application"
                                 , ex);
 
                 throw;

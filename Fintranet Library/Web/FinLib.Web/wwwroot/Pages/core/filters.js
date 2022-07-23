@@ -83,7 +83,7 @@ altairApp.filter('gridFilter', function ($filter, $sce, $sanitize) {
         else {
             switch (filterName) {
                 case 'dateTime':
-                    result = new Date(value).toLocaleString();
+                    result = value ? new Date(value).toLocaleString() : undefined;
                     break;
                 case 'persianDate':
                     result = $filter(filterName)(value, 'yyyy/MM/dd');

@@ -182,7 +182,7 @@ namespace FinLib.Web.Helpers
         }
 
         /// <summary>
-        /// مطمین میشه که کاربر یا کاربران اصلی (ادمین اصلی) و نقش های پیش فرض، وجود داشته باشن
+        /// ensure default roles, users and userRoles exist
         /// </summary>
         /// <param name="app"></param>
         /// <param name="globalSettings"></param>

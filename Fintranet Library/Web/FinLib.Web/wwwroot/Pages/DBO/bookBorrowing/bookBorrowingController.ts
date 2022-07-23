@@ -73,9 +73,9 @@
             $scope.gridViewConfig = {
                 elementId: 'books_borrowing_grid',
                 showCheckbox: false,
-                deleteLinkVisible: true,
+                deleteLinkVisible: false,
                 editLinkVisible: true,
-                singleViewLinkVisible: true,
+                singleViewLinkVisible: false,
                 lastUpdateTimeVisible: true,
                 customActions: [
                     {

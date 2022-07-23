@@ -46,7 +46,7 @@ namespace FinLib.Providers.Database
 
             if (columns.Count == 0)
             {
-                throw new InvalidImplementationException("هیچ ستونی جهت نمایش تعیین نشده است");
+                throw new InvalidImplementationException("There are no columns to view");
             }
 
             return columns.OrderBy(item => item.OrderNumber).ToList();

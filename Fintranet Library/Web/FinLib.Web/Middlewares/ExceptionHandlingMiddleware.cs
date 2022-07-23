@@ -20,7 +20,7 @@ namespace FinLib.Admin.Middlewares
         {
             _next = next;
         }
-        
+
         public async Task InvokeAsync(HttpContext httpContext, [FromServices] IAppLogger appLogger)
         {
             try
@@ -29,9 +29,9 @@ namespace FinLib.Admin.Middlewares
             }
             catch (Exception ex)
             {
-                var traceId = appLogger.Error( Models.Enums.EventCategory.Application
+                var traceId = appLogger.Error(Models.Enums.EventCategory.Application
                                                             , Models.Enums.EventId.UnhandledException
-                                                            ,  Models.Enums.EventType.Error
+                                                            , Models.Enums.EventType.Error
                                                             , ex.Message
                                                             , ex);
 
@@ -53,9 +53,8 @@ namespace FinLib.Admin.Middlewares
             if (error is BaseBusinessException)
                 return HttpStatusCode.BadRequest;
             else
-            {       // FinLib.Common.Exceptions.Base.InfraException baashe ya System.Exception
+            {       
                 return HttpStatusCode.InternalServerError;
-                // dar har soorat bayad hame error haa ro handle konim o ta jayi k mishe InternalServerErrors nadim b client, vali dg gaahi karsh nmishe kard :(
             }
         }
 

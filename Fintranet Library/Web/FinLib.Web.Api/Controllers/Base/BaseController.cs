@@ -4,7 +4,10 @@ using FinLib.Services.Base;
 using FinLib.Web.Api.Helpers;
 using FinLib.Web.Shared.Attributes;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace FinLib.Web.Api.Base
 {

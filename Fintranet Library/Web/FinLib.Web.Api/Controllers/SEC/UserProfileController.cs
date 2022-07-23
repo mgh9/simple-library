@@ -10,6 +10,7 @@ using FinLib.Services.SEC;
 using FinLib.Web.Api.Base;
 using FinLib.Web.Shared.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using JsonResult = FinLib.Models.Base.JsonResult;
 
 namespace FinLib.Web.Api.SEC

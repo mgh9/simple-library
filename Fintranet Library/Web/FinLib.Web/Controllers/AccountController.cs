@@ -3,52 +3,32 @@ using FinLib.Models.Configs;
 using FinLib.Providers.Configuration;
 using FinLib.Providers.Identity;
 using FinLib.Providers.Logging;
-using FinLib.Services.Base;
-using FinLib.Services.SEC;
 using FinLib.Web.Shared.Attributes;
 using FinLib.Web.Shared.Models.ViewModels.Account;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
-using Wangkanai.Detection.Services;
 using User = FinLib.DomainClasses.SEC.User;
 
 namespace FinLib.Web.Controllers
 {
     public partial class AccountController : Base.BaseAuthorizedController
     {
-        private readonly GlobalSettings _globalSettings;
         private readonly AppUserManager _userManager;
         private readonly SignInManager<User> _signInManager;
-
         private readonly IAppLogger _appLogger;
-        private readonly IAuthenticationSchemeProvider _schemeProvider;
-        private readonly ICommonServicesProvider<GlobalSettings> _commonServicesProvider;
-
-        private readonly UserService _userService;
-        private readonly IHostApplicationLifetime _hostApplicationLifetime;
+        private readonly GlobalSettings _globalSettings;
 
         public AccountController(IAppLogger appLogger,
                                     AppUserManager userManager,
                                     SignInManager<User> signInManager,
-
-                                    UserService userService,
-                                    IDetectionService detectionService,
-                                    IAppSettingsProvider<GlobalSettings> globalSettingsProvider,
-                                    IHostApplicationLifetime hostApplicationLifetime,
-                                    ICommonServicesProvider<FinLib.Models.Configs.GlobalSettings> commonServicesProvider)
+                                    IAppSettingsProvider<GlobalSettings> globalSettingsProvider)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appLogger = appLogger;
-            _commonServicesProvider = commonServicesProvider;
-
-            _hostApplicationLifetime = hostApplicationLifetime;
-            _userService = userService;
             _globalSettings = globalSettingsProvider.Settings;
         }
 
@@ -62,13 +42,6 @@ namespace FinLib.Web.Controllers
         {
             var model = new LoginViewModel { ReturnUrl = returnUrl };
             return View(model);
-
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
-            //return View();
         }
 
         // POST: /Account/Login
@@ -101,11 +74,11 @@ namespace FinLib.Web.Controllers
                 ModelState.AddModelError("", "Invalid login attempt");
                 return View(model);
             }
-            catch (Exception ex)
+            catch 
             {
-                //_appLogger.AuditError(new UserLoginFailureEvent(model.UserName, "اشکالی در ورود حساب کاربری شما رخ داده است. با پشتیبانی سامانه تماس حاصل فرمایید", clientId: context?.Client.ClientId), ex);
+                //_appLogger.AuditError(.............);
 
-                ModelState.AddModelError("", "اشکالی در ورود حساب کاربری شما رخ داده است. با پشتیبانی سامانه تماس حاصل فرمایید");
+                ModelState.AddModelError("", "There is an error in signing u in, please contact the support");
                 return View(model);
             }
         }
